@@ -3,39 +3,58 @@ import csv
 import sys
 
 def print_usage():
-    print("printing usage")
     #print each line of usage.txt
-    return 0
+    with open('usage.txt', 'r') as usage:
+        for line in usage:
+            print(line, end = "")
 
 def search_authors(searchstring):
-    #for each line in the csv, determine if the searchstring is
-    #contained in the author column (case insensitive)
-        #for each author where this is the case, keep track of
-        #their books, and print them out at the end
-
-    #if the searchstring isn't contained in any author names,
-    #then print some kind of error message
-    return 0
+    searchstring = searchstring.lower()
+    authorbooks_dict = {}
+    with open('books.csv', 'r') as bookfile:
+        reader = csv.reader(bookfile)
+        for row in reader:
+            author = row[2]
+            authorLower = author.lower()
+            if searchstring in authorLower:
+                if author in authorbooks_dict:
+                    authorbooks_dict[author].append(row[0])
+                else:
+                    authorbooks_dict[author] = [row[0]]
+    if len(authorbooks_dict) == 0:
+        print("We couldn't find any authors that matched this search")
+    else:
+        for author in authorbooks_dict:
+            print("Books written by", author + ":")
+            for book in authorbooks_dict[author]:
+                print("     ", book)
+            print()
 
 def search_titles(searchstring):
-    #for each line in the csv, determine if the searchstring is
-    #contained in the title column (case insensitive)
-        #if it is contained, print out the full title and other info (?)
-
-    #if the searchstring isn't contained in any titles,
-    #then print some kind of error message
-    return 0
+    searchstring = searchstring.lower()
+    title_count = 0
+    with open('books.csv', 'r') as bookfile:
+        reader = csv.reader(bookfile)
+        for row in reader:
+            title = row[0]
+            titleLower = title.lower()
+            if searchstring in titleLower:
+                print(title + ", written by", row[2])
+                title_count += 1
+    if title_count == 0:
+        print("We couldn't find any books that matched this search")
 
 def find_books_in_range(startyear, endyear):
-    #for each line in the csv, determine if the publication year is
-    #within the given range
-        #if the book is contained within the range, print out title
-        #and other info(?)
-
-    #if there are no books within the range, print out some kind
-    #of error message
-
-    return 0
+    title_count = 0
+    with open('books.csv', 'r') as bookfile:
+        reader = csv.reader(bookfile)
+        for row in reader:
+            published = int(row[1])
+            if published >= startyear and published <= endyear:
+                print(row[0] + ", written by", row[2] + ", published in", published)
+                title_count += 1
+    if title_count == 0:
+        print("We couldn't find any books that were published between", startyear, "and", endyear)
 
 def parse_arguments(arg_list):
     arg_dict = {}
@@ -52,8 +71,7 @@ def parse_arguments(arg_list):
                 arg_dict["command"] = '-a'
                 arg_dict["searchstring"] = searchstring
             else:
-                print("The option -a must include a SEARCHSTRING")
-                print("See below for proper command-line syntax \n\n")
+                arg_dict["error"] = "The option -a must include a SEARCHSTRING."
                 valid = False
 
         if '-d' in arg or '--daterange' in arg:
@@ -76,14 +94,14 @@ def parse_arguments(arg_list):
                             elif '--until' in daterange_arg:
                                 arg_dict["endyear"] = year
                         except:
-                            print("Make sure your STARTYEAR and ENDYEAR are valid integers.\n\n")
+                            arg_dict["error"] = "Make sure your STARTYEAR and ENDYEAR are valid integers."
                     else:
-                        print("The option -d must include both --from=STARTYEAR and --until=ENDYEAR.\n\n")
+                        arg_dict["error"] = "The option -d must include both --from=STARTYEAR and --until=ENDYEAR."
 
             if (from_count == 1 and until_count == 1) and ("startyear" in arg_dict) and ("endyear" in arg_dict):
                 valid = True
                 if arg_dict["startyear"] >= arg_dict["endyear"]:
-                    print("For the option -d, STARTYEAR must be earlier than ENDYEAR.\n\n")
+                    arg_dict["error"] = "For the option -d, STARTYEAR must be earlier than ENDYEAR."
                     valid = False
             else:
                 valid = False
@@ -101,8 +119,7 @@ def parse_arguments(arg_list):
                 arg_dict["command"] = '-t'
                 arg_dict["searchstring"] = searchstring
             else:
-                print("The option -t must include a SEARCHSTRING")
-                print("See below for proper command-line syntax \n\n")
+                arg_dict["error"] = "The option -t must include a SEARCHSTRING"
                 valid = False
 
 
@@ -110,28 +127,28 @@ def parse_arguments(arg_list):
     if operation_count != 1:
         valid = False
         if operation_count > 1:
-            print("You can only execute one command at once.")
+            arg_dict["error"] = "You can only execute one command at once."
         elif operation_count == 0:
-            print("You did not enter any valid command line arguments.")
-        print("See usage page below. \n\n")
+            arg_dict["error"] = "You did not enter any valid command line arguments."
 
     arg_dict["valid"] = valid
     return arg_dict
 
 def main():
     #parse command-line arguments
-    arg_list = sys.argv
-    print(sys.argv)
-    parsed_args = parse_arguments(arg_list)
-    print(parsed_args)
+    parsed_args = parse_arguments(sys.argv)
     if not(parsed_args["valid"]) or parsed_args["command"] == '-h':
         print_usage()
+        print("\n\n" + parsed_args["error"])
         return
-
-
-    #verify that command-line arguments are valid
     #depending on the arguments, run the proper functions
-    return 0
+    if parsed_args["command"] == '-a':
+        search_authors(parsed_args["searchstring"])
+    elif parsed_args["command"] == '-t':
+        search_titles(parsed_args["searchstring"])
+    elif parsed_args["command"] == '-d':
+        find_books_in_range(parsed_args["startyear"], parsed_args["endyear"])
+
 
 if __name__ == "__main__":
     main()
