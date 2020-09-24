@@ -3,7 +3,7 @@ NAME
 
 SYNOPSIS
 	python3 books.py -a=[SEARCHSTRING]
-	python3 books.py -d --from=[STARTYEAR] --to=[ENDYEAR]
+	python3 books.py -d --from=[STARTYEAR] --until=[ENDYEAR]
 	python3 books.py -h
 	python3 books.py -t=[SEARCHSTRING]
 
@@ -14,7 +14,7 @@ OPTIONS
 	-a=[SEARCHSTRING]      --author=[SEARCHSTRING]
 		Displays all authors whose names contain the given SEARCHSTRING, as well as all of their books. The SEARCHSTRING is case insensitive. The SEARCHSTRING is mandatory for this operation.
 
-	-d --from=[STARTYEAR] --to=[ENDYEAR]     --daterange --from=[STARTYEAR] --to=[ENDYEAR]
+	-d --from=[STARTYEAR] --until=[ENDYEAR]     --daterange --from=[STARTYEAR] --until=[ENDYEAR]
 		Displays all books that were published within the given inclusive date range. STARTYEAR must be an earlier year than ENDYEAR. STARTYEAR and ENDYEAR are mandatory for this operation.
 
   	-h     --help
