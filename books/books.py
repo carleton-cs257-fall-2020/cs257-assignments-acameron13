@@ -36,8 +36,8 @@ def find_books_in_range(startyear, endyear):
 
     return 0
 
-def are_valid_arguments(arg_list):
-    valid = False
+def parse_arguments(arg_list):
+
     if (len(arg_list) <= 1) or ('-d' in arg_list and len(arg_list) != 4):
         return valid
 
@@ -55,6 +55,15 @@ def are_valid_arguments(arg_list):
         if '-d' in arg or '--daterange' in arg:
             operation_count += 1
             #do more checking
+            from_count = 0
+            to_count = 0
+            for daterange_arg in arg_list:
+                if '--from'in daterange_arg:
+                    if '=' in daterange_arg and len(daterange_arg.split('=')) == 2:
+                        try:
+                            year = int(daterange_arg.split('=')[1])
+                        catch
+                    from_count
 
         if '-h' in arg or '--help' in arg:
             operation_count += 1
