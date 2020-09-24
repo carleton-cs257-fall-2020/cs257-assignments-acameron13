@@ -15,7 +15,7 @@ OPTIONS
 		Displays all authors whose names contain the given SEARCHSTRING, as well as all of their books. The SEARCHSTRING is case insensitive. The SEARCHSTRING is mandatory for this operation.
 
 	-d --from=[STARTYEAR] --to=[ENDYEAR]     --daterange --from=[STARTYEAR] --to=[ENDYEAR]
-		Displays all books that were published within the given inclusive date range. STARTYEAR and ENDYEAR are mandatory for this operation.
+		Displays all books that were published within the given inclusive date range. STARTYEAR must be an earlier year than ENDYEAR. STARTYEAR and ENDYEAR are mandatory for this operation.
 
   	-h     --help
 	  	Display this help page and exit
