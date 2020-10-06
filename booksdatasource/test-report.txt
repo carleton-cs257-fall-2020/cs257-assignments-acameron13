@@ -1,0 +1,23 @@
+test-report.txt
+Alison Cameron (working alone)
+10/05/20
+
+Things that I fixed:
+-In the setUp() function, we hadn't initialized the object correctly, so I changed
+our input to strings and made sure they were the test csvs.
+-A few typos here and there that I only caught when I ran the tests
+-I got a warning saying to use assertEqual() instead of assertEquals(), so I changed
+all of those
+-We had misunderstood the situations where a ValueError would be raised for an
+invalid author id. We thought that an empty list would be returned if the
+author id was an integer but wasn't contained in the dataset, but in reality,
+this situation raises a ValueError. I changed what was our "empty list" test so
+that it made sure a ValueError is raised.
+
+
+Bugs in Jeff's implementation:
+-The death year in each author's dictionary is represented as a string rather
+than an integer. The test that caught this was my test_authorf_search_text_exists().
+I changed the implementation in booksdatasource.py so that it would be an integer,
+and then it solved another error in test_authorf_search_text_none() as well. So
+really, both of those tests caught that bug in the implementation.
