@@ -50,7 +50,6 @@ def get_full_state_name(abr):
 def create_state_id_csv(states_ids):
     with open('state_ids.csv', 'w') as f:
         writer = csv.writer(f)
-        writer.writerow(["id", "name", "abbreviation"])
         for state in states_ids:
             row = [states_ids[state], get_full_state_name(state), state]
             writer.writerow(row)
@@ -60,9 +59,6 @@ def edit_all_states_history(state_ids):
     old = open('all-states-history.csv', 'r')
     reader = csv.reader(old)
     writer = csv.writer(new)
-
-    header = ['date', 'state_id', 'deaths', 'new_positive_tests', 'new_negative_tests', 'new_hospitalizations']
-    writer.writerow(header)
 
     for row in reader:
         date, state, death, hosp, neg, pos = row[0], row[1], row[2], row[3], row[4], row[5]
