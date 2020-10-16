@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 '''
     Alison Cameron and Adam Nik
+    
+    Implements an API for covid19 database
+    
+    NOTE: covid19_api.py uses config.py for user, password, and database to access psql database.
+    config.py must be modified for new user to use
 '''
 import sys
 import argparse
