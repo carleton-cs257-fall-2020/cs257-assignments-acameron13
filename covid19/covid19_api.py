@@ -100,6 +100,16 @@ def get_all_cumulative_data():
 
 	return all_cumulative_data
 
+@app.route('/state/<state_abbreviation>/daily')
+def route_daily_data(state_abbreviation):
+	daily_state_data = get_daily_data(state_abbreviation)
+	return json.dumps(daily_state_data)
+
+@app.route('/state/<state_abbreviation>/cumulative')
+def route_cumulative_data(state_abbreviation):
+	cumulative_data = get_cumulative_data(state_abbreviation)
+	return json.dumps(cumulative_data)
+	
 @app.route('/states/cumulative')
 def route_all_cumulative_data():
     all_cumulative_data = get_all_cumulative_data()
@@ -111,16 +121,6 @@ def route_all_cumulative_data():
     sorted_cumulative_data = sorted(all_cumulative_data, key=lambda x: x[sort], reverse=True)
 
     return json.dumps(sorted_cumulative_data)
-
-@app.route('/state/<state_abbreviation>/cumulative')
-def route_cumulative_data(state_abbreviation):
-	cumulative_data = get_cumulative_data(state_abbreviation)
-	return json.dumps(cumulative_data)
-
-@app.route('/state/<state_abbreviation>/daily')
-def route_daily_data(state_abbreviation):
-	daily_state_data = get_daily_data(state_abbreviation)
-	return json.dumps(daily_state_data)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('A sample Flask application/API')
