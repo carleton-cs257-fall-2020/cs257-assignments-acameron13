@@ -20,6 +20,9 @@ from config import database
 app = flask.Flask(__name__)
 
 def get_psql_cursor():
+	'''
+	Returns cursor to psql database connection
+	'''
 	try:
 		connection = psycopg2.connect(database=database, user=user, password=password)
 		cursor = connection.cursor()
@@ -30,6 +33,21 @@ def get_psql_cursor():
 	return cursor
 
 def get_daily_data(state_abbreviation):
+	'''
+	Returns a list of dictionaries, each of which represents the
+    COVID-19 statistics from the specified state on a single date. Each
+    dictionary will have the following fields.
+
+    date -- YYYY-MM-DD (e.g. "2020-10-08")
+    state -- upper-case two-letter state abbreviation (e.g. "MN")
+    deaths -- (integer) the number of deaths on this date
+    positive -- (integer) the number of positive COVID-19 tests on this date
+    negative -- (integer) the number of negative COVID-19 tests on this date
+    hospitalizations -- (integer) the number of new hospitalizations
+
+    for COVID-19 on this date
+    '''
+    
 	try:
 		query = '''SELECT covid19_days.date, covid19_days.state_id, states.id, states.abbreviation, covid19_days.deaths, covid19_days.new_positive_tests, covid19_days.new_negative_tests, covid19_days.new_hospitalizations
 					FROM covid19_days, states
@@ -57,6 +75,20 @@ def get_daily_data(state_abbreviation):
 	return daily_state_data
 
 def get_cumulative_data(state_abbreviation):
+	'''
+	Returns a single dictionary representing the cumulative
+    statistics for the specified state. The dictionary will have the
+    following fields.
+
+    start_date -- YYYY-MM-DD (e.g. "2020-10-08")
+    end_date -- YYYY-MM-DD (e.g. "2020-03-11")
+    state -- upper-case two-letter state abbreviation (e.g. "MN")
+    deaths -- (integer) the total number of deaths between the start and end dates (inclusive)
+    positive -- (integer) the number of positive COVID-19 tests between the start and end dates (inclusive)
+    negative -- (integer) the number of negative COVID-19 tests between the start and end dates (inclusive)
+    hospitalizations -- (integer) the number of hospitalizations between the start and end dates (inclusive)
+    '''
+    
 	daily_state_data = get_daily_data(state_abbreviation)
 
 	start_date = daily_state_data[0]['date']
@@ -90,6 +122,12 @@ def get_cumulative_data(state_abbreviation):
 	return cumulative_data
 
 def get_all_cumulative_data():
+	'''
+	returns a list of dictionaries, each representing the
+    cumulative COVID-19 statistics for each state.
+    The dictionaries have the same fields as get_cumulative_data
+    '''
+    
 	try:
 		query = '''SELECT abbreviation FROM states'''
 		cursor = get_psql_cursor()
@@ -107,25 +145,40 @@ def get_all_cumulative_data():
 
 @app.route('/state/<state_abbreviation>/daily')
 def route_daily_data(state_abbreviation):
+	'''
+	a JSON list of dictionaries from get_daily_data for the specified state.
+	'''
+	
 	daily_state_data = get_daily_data(state_abbreviation)
 	return json.dumps(daily_state_data)
 
 @app.route('/state/<state_abbreviation>/cumulative')
 def route_cumulative_data(state_abbreviation):
+	'''
+	a JSON dictionary from get_cumulative_data for the specified state.
+	'''
+	
 	cumulative_data = get_cumulative_data(state_abbreviation)
 	return json.dumps(cumulative_data)
 	
 @app.route('/states/cumulative')
 def route_all_cumulative_data():
-    all_cumulative_data = get_all_cumulative_data()
-    sort = flask.request.args.get('sort')
-    if sort is None:
-        sort = 'deaths'
-    if sort == 'cases':
-        sort = 'positive'
-    sorted_cumulative_data = sorted(all_cumulative_data, key=lambda x: x[sort], reverse=True)
+	'''
+	a JSON list of dictionaries of cumulative data for each state
+    that are sorted in decreasing order of deaths, cases (i.e. positive tests),
+    or hospitalizations, depending on the value of the GET parameter "sort".
+    If sort is not present, then the list will be sorted by deaths.
+    '''
+    
+	all_cumulative_data = get_all_cumulative_data()
+	sort = flask.request.args.get('sort')
+	if sort is None:
+		sort = 'deaths'
+	if sort == 'cases':
+		sort = 'positive'
+	sorted_cumulative_data = sorted(all_cumulative_data, key=lambda x: x[sort], reverse=True)
 
-    return json.dumps(sorted_cumulative_data)
+	return json.dumps(sorted_cumulative_data)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('A sample Flask application/API')
