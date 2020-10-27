@@ -1,1 +1,55 @@
 Adam Nik and Alison Cameron
+
+Dataset: https://www.kaggle.com/heesoo37/120-years-of-olympic-history-athletes-and-results
+
+	Our dataset is data from Olympic athletes, events, and results from the past 120 years, including both Summer and Winter games.
+The data includes every athlete that competed with their respective team and country, along with physical characteristics.
+
+Tables:
+
+CREATE TABLE athletes (
+	id SERIAL,
+	name TEXT,
+	sex TEXT,
+	birth_year INT,
+	height INT,
+	weight INT,
+	country_id INT,
+);
+
+CREATE TABLE countries (
+	id SERIAL,
+	team TEXT,
+	noc TEXT,
+	country TEXT,
+);
+
+CREATE TABLE games (
+	id SERIAL,
+	year INT,
+	season TEXT,
+	city TEXT,
+);
+
+CREATE TABLE events (
+	id SERIAL,
+	event TEXT,
+	sport TEXT,
+);
+
+CREATE TABLE results (
+	athlete_id INT,
+	game_id INT,
+	event_id INT,
+	medal TEXT,
+);
+
+Stories:
+
+STORY: I'm a gambler and it's time to make some money this upcoming Olympic Games. I need statistics on which countries have been
+most productive in winning medals so I can make a confident bet on the medal counts for these games.
+
+IMPLEMENTATION: We want to have a data visualization that shows a line graph of the total medals for a given country for each year. We will have a
+default setting that places the line segments of every country on one graph. From there, a user can specify a country of which they want to
+analyze alone (a visualization similar to the baby name website we talked about in class).
+
