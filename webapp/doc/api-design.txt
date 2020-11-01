@@ -1,0 +1,43 @@
+Adam Nik and Alison Cameron
+
+REQUEST: /olympics/map
+
+RESPONSE: A dictionary that contains all of the cities where Olympic Games have been held
+as keys. The values are lists of dictionaries that contain information that each games 
+associated with that city.
+
+Example: {"London": [{"Season": "Summer", "Year": 2012}, 
+					 {"Season": "Summer", "Year": 1948},
+					 {"Season": "Summer", "Year": 1908}], 				 
+		  "Sydney": [{"Season": "Summer", "Year": 2000}],
+		  ...
+		  } 
+
+		  
+REQUEST: /olympics/linegraph?team={team}&sport={sport}
+
+RESPONSE: A dictionary with keys of every team and values of lists of every games with the
+medal count won by that country at that games
+
+Example: {"USA": [{"Season": "Summer", "Year": 2016, "medals": 121},
+				  {"Season": "Winter", "Year": 2014, "medals": 28},
+				  ...],
+		  "Canada": [{"Season": "Summer", "Year": 2016, "medals": 22},
+				  {"Season": "Winter", "Year": 2014, "medals": 25},
+				  ...],
+		   ...
+		   }
+	
+	
+REQUEST: /olympics/search?athlete={athlete_search}&team={team}&games={games}&sport={sport}
+		&event={event}
+
+RESPONSE: A list of dictionaries where each list represents a row in our search table. 
+
+Example: [{"Games": "2000 Summer", "Sport": "Wrestling", "Event": 
+		  "Wrestling Men's Light-Heavyweight, Greco-Roman", "Medal": None,
+		  "Athlete": "Fritz Aanes", "Sex": "Male", "Height": 187, "Weight": 89,
+		  "Birth Year": 1978},
+		   ...
+		  ]
+	   
