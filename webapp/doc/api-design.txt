@@ -2,9 +2,9 @@ Adam Nik and Alison Cameron
 
 REQUEST: /olympics/map
 
-RESPONSE: A dictionary that contains all of the cities where Olympic Games have been held
-as keys. The values are lists of dictionaries that contain information that each games 
-associated with that city.
+RESPONSE: A JSON dictionary that contains all of the cities where Olympic Games have been 
+held as keys. The values are lists of dictionaries that contain information that each 
+games associated with that city.
 
 Example: {"London": [{"Season": "Summer", "Year": 2012}, 
 					 {"Season": "Summer", "Year": 1948},
@@ -16,8 +16,12 @@ Example: {"London": [{"Season": "Summer", "Year": 2012},
 		  
 REQUEST: /olympics/linegraph?team={team}&sport={sport}
 
-RESPONSE: A dictionary with keys of every team and values of lists of every games with the
-medal count won by that country at that games
+		 Our default line-graph will have the overall medal count of every country 
+		 throughout all games, with the options of specifying which teams/sports to
+		 focus on
+
+RESPONSE: A JSON dictionary with keys of every team and values of lists of every games 
+with the medal count won by that country at that games
 
 Example: {"USA": [{"Season": "Summer", "Year": 2016, "medals": 121},
 				  {"Season": "Winter", "Year": 2014, "medals": 28},
@@ -31,8 +35,12 @@ Example: {"USA": [{"Season": "Summer", "Year": 2016, "medals": 121},
 	
 REQUEST: /olympics/search?athlete={athlete_search}&team={team}&games={games}&sport={sport}
 		&event={event}
+		
+		Each of our search fields (athlete, team, etc) will be optional, and the default
+		search will return every item in the dataset.
 
-RESPONSE: A list of dictionaries where each list represents a row in our search table. 
+RESPONSE: A JSON list of dictionaries where each list represents a row in our search 
+table. 
 
 Example: [{"Games": "2000 Summer", "Sport": "Wrestling", "Event": 
 		  "Wrestling Men's Light-Heavyweight, Greco-Roman", "Medal": None,
