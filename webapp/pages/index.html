@@ -31,25 +31,27 @@
 
   <hr class="linebreak" color=#0A0F50>
 
-  <div class="graph_dropdowns">
-    <div class="dropdown" id="team">
-      <button class="dropbtn">Team</button>
-      <div class="dropdown-content">
-        <a href="#">USA</a>
-        <a href="#">CAN</a>
-        <a href="#">BRA</a>
-      </div>
-    </div>
+  <form method="get">
+    <label for="fname"></label>
+    <input type="text" list="teams" id="fname" name="fname" placeholder="Team">
+    <datalist id="teams">
+      <option value="USA">
+      <option value="CAN">
+      <option value="BRA">
+      <option value="UKR">
+    </datalist>
 
-    <div class="dropdown" id="sport">
-      <button class="dropbtn">Sport</button>
-      <div class="dropdown-content">
-        <a href="#">Swimming</a>
-        <a href="#">Athletics</a>
-        <a href="#">Volleyball</a>
-      </div>
-    </div>
-  </div>
+    <label for="fname"></label>
+    <input type="text" list="sports" id="fname" name="fname" placeholder="Sport">
+    <datalist id="sports">
+      <option value="Swimming">
+      <option value="Athletics">
+      <option value="Volleyball">
+    </datalist>
+
+
+    <input type="submit" value="Submit">
+  </form>
 
   <div class="image">
     <img src="assets/linegraph.png" width="75%">
