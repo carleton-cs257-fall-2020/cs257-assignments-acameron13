@@ -1,14 +1,60 @@
 <!Alison Cameron and Adam Nik>
 
-<! -dropdown menus: <select> tag
-   -autocomplete seach
-   -interactive map w/ dots
-   -mouse hovering
-   -streamlined version of table?
-   -tabs at the top: navbar in css, class="navbar" in html
-   -graphs ?????
- >
+<! -dropdown menus: select tag >
+<!   -autocomplete search >
+<!   -interactive map w/ dots >
+<!   -mouse hovering >
+<!   -streamlined version of table? >
+<!   -graphs ????? >
 
 <html>
+<head>
+  <meta charset="UTF-8">
+  <title>Olympics</title>
+  <link rel="stylesheet" href="index.css" type="text/css" />
+</head>
+
+<body>
+  <div id="top">
+    <div class="logo">
+      <img src="assets/olympic_rings.png" height="75" alt="logo">
+    </div>
+    <div class="topnav">
+      <a class="active" href="#graphs">Graphs</a>
+      <a href="#search">Search</a>
+    </div>
+  </div>
+
+  <div class="image">
+    <img src="assets/map.png" width="75%">
+  </div>
+
+  <hr class="linebreak" color=#0A0F50>
+
+  <div class="graph_dropdowns">
+    <div class="dropdown" id="team">
+      <button class="dropbtn">Team</button>
+      <div class="dropdown-content">
+        <a href="#">USA</a>
+        <a href="#">CAN</a>
+        <a href="#">BRA</a>
+      </div>
+    </div>
+
+    <div class="dropdown" id="sport">
+      <button class="dropbtn">Sport</button>
+      <div class="dropdown-content">
+        <a href="#">Swimming</a>
+        <a href="#">Athletics</a>
+        <a href="#">Volleyball</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="image">
+    <img src="assets/linegraph.png" width="75%">
+  </div>
+
+</body>
 
 </html>
