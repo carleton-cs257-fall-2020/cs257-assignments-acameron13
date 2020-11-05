@@ -104,3 +104,25 @@ hr.linebreak{
 #sport{
   float: right;
 }
+
+.searchnav {
+  overflow: hidden;
+  background-color: #B9B9B9;
+  height: 40px;
+  border: 10px;
+  padding-top: 10px;
+  padding-left: 20%;
+}
+
+.searchbtn{
+  background-color: #f1f1f1;
+  color: #0A0F50;
+  font-size: 18px;
+  border: none;
+  height: 25px;
+}
+
+
+
+
+
