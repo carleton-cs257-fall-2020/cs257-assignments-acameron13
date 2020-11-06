@@ -1,11 +1,9 @@
-<!Alison Cameron and Adam Nik>
+<!-- Alison Cameron and Adam Nik -->
 
-<! -dropdown menus: select tag >
-<!   -autocomplete search >
-<!   -interactive map w/ dots >
-<!   -mouse hovering >
-<!   -streamlined version of table? >
-<!   -graphs ????? >
+<!-- -interactive map w/ dots
+     -streamlined version of table?
+     -adding options in the dropdowns dynamically
+     -graphs ????? -->
 
 <html>
 <head>
@@ -31,9 +29,8 @@
 
   <hr class="linebreak" color=#0A0F50>
 
-  <form method="get">
-    <label for="fname"></label>
-    <input type="text" list="teams" id="fname" name="fname" placeholder="Team">
+  <form method="get" class="graph_dropdowns">
+    <input type="text" list="teams" class="graph_dropbtn" placeholder="Team">
     <datalist id="teams">
       <option value="USA">
       <option value="CAN">
@@ -41,16 +38,14 @@
       <option value="UKR">
     </datalist>
 
-    <label for="fname"></label>
-    <input type="text" list="sports" id="fname" name="fname" placeholder="Sport">
+    <input type="text" list="sports" class="graph_dropbtn" placeholder="Sport">
     <datalist id="sports">
       <option value="Swimming">
       <option value="Athletics">
       <option value="Volleyball">
     </datalist>
 
-
-    <input type="submit" value="Submit">
+    <input type="submit" value="Submit" id="graph_submit">
   </form>
 
   <div class="image">

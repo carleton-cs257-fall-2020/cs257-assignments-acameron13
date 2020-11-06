@@ -48,61 +48,28 @@ hr.linebreak{
 
 .graph_dropdowns{
   margin:auto;
-  width: 30%;
+  width: 45%;
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
-.dropdown {
-  position: relative;
-  display: inline-block;
-  margin:auto;
-}
-
-.dropbtn {
+.graph_dropbtn {
   background-color: #0A0F50;
   color: #FFC300;
-  padding: 10px;
   font-size: 24px;
   border: none;
-  height: 50px;
+  height: 40px;
+  width: 150px;
+  margin: 10px;
+  border-radius: 3px;
 }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  color: #0A0F50;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-content a:hover {
+#graph_submit{
   background-color: #0A0F50;
-  color: #FFC300
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-.dropdown:hover .dropbtn {
-  background-color: #0A0F50;
-}
-
-#team{
-  float: left;
-}
-
-#sport{
-  float: right;
+  color: #FFC300;
+  border: none;
+  border-radius: 3px;
+  height: 25px;
 }
 
 .searchnav {
@@ -114,11 +81,23 @@ hr.linebreak{
   padding-left: 20%;
 }
 
-.searchbtn{
+.search_dropbtn {
+  background-color: #f1f1f1;
+  color: #0A0F50;
+  font-size: 20px;
+  border: none;
+  height: 40px;
+  width: 150px;
+  margin: 10px;
+  border-radius: 3px;
+}
+
+#search_submit{
   background-color: #f1f1f1;
   color: #0A0F50;
   font-size: 18px;
-  border: none;
+  border: #0A0F50;
+  border-radius: 3px;
   height: 25px;
 }
 
@@ -144,8 +123,3 @@ hr.linebreak{
   background-color: #0A0F50;
   color: white;
 }
-
-
-
-
-
