@@ -14,7 +14,6 @@ CREATE TABLE athletes (
 	birth_year INT,
 	height INT,
 	weight INT,
-	country_id INT,
 );
 
 CREATE TABLE countries (
@@ -37,11 +36,17 @@ CREATE TABLE events (
 	sport TEXT,
 );
 
-CREATE TABLE results (
-	athlete_id INT,
-	game_id INT,
-	event_id INT,
+CREATE TABLE medals (
+	id SERIAL,
 	medal TEXT,
+);
+
+CREATE TABLE results (
+	game_id INT,
+	country_id INT,
+	event_id INT,
+	medal_id INT,
+	athlete_id INT,
 );
 
 Stories:
@@ -51,7 +56,7 @@ most productive in winning medals so I can make a confident bet on the medal cou
 
 IMPLEMENTATION: We want to have a data visualization that shows a line graph of the total medals for a given country for each year. We will have a
 default setting that places the line segments of every country on one graph. From there, a user can specify a country and/or an event of which they want to
-analyze alone (a visualization similar to the baby name website we talked about in class). We are planning to have a drop down menu to help the 
+analyze alone (a visualization similar to the baby name website we talked about in class). We are planning to have a drop down menu to help the
 user specify the given field they want to analyze.
 
 
@@ -65,8 +70,7 @@ for the other fields (games, sport, event, team, etc). Results will be displayed
 STORY: I'm a traveler and I am planning on taking a trip to China this summer. I know one of my destinations will be Beijing, China, and I am interested
 in learning more about the results from the 2008 games that were held there.
 
-IMPLEMENTATION: We want to have a data visualization that is a map of the world and includes dots that represent every city that has hosted an Olympic Games. 
-We also plan to shade in countries based on how many medals they have won over time. When hovering over the dots, they expand and tell the user which 
-year(s) those games were held. From there, a user can click on the dot and the site will take them to the search portion of the website where the games field 
+IMPLEMENTATION: We want to have a data visualization that is a map of the world and includes dots that represent every city that has hosted an Olympic Games.
+We also plan to shade in countries based on how many medals they have won over time. When hovering over the dots, they expand and tell the user which
+year(s) those games were held. From there, a user can click on the dot and the site will take them to the search portion of the website where the games field
 is already selected with the games they chose. (We're not sure exactly how to implement this but we are excited for the idea of doing it!)
-
