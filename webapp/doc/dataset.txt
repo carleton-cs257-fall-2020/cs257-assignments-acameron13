@@ -13,32 +13,32 @@ CREATE TABLE athletes (
 	sex TEXT,
 	birth_year INT,
 	height INT,
-	weight INT,
+	weight INT
 );
 
 CREATE TABLE countries (
 	id SERIAL,
 	team TEXT,
 	noc TEXT,
-	country TEXT,
+	region TEXT
 );
 
 CREATE TABLE games (
 	id SERIAL,
 	year INT,
 	season TEXT,
-	city TEXT,
+	city TEXT
 );
 
 CREATE TABLE events (
 	id SERIAL,
 	event TEXT,
-	sport TEXT,
+	sport TEXT
 );
 
 CREATE TABLE medals (
 	id SERIAL,
-	medal TEXT,
+	medal TEXT
 );
 
 CREATE TABLE results (
@@ -46,7 +46,7 @@ CREATE TABLE results (
 	country_id INT,
 	event_id INT,
 	medal_id INT,
-	athlete_id INT,
+	athlete_id INT
 );
 
 Stories:
