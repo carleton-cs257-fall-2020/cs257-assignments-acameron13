@@ -17,10 +17,22 @@ def get_athletes():
 			if not (athlete_name in athlete):
 				age, year = row[3], row[9]
 				if not(age.isnumeric()):
-					birth_year = "NA"
+					birth_year = "NULL"
 				else:
 					birth_year = int(year) - int(age)
-				athlete[athlete_name] = {'sex': row[2], 'birth_year': birth_year, 'height': row[4], 'weight': row[5]}
+
+				height, weight = row[4], row[5]
+				if not(height.isnumeric()):
+					height = "NULL"
+				else:
+					height = int(height)
+
+				if not(weight.isnumeric()):
+					weight = "NULL"
+				else:
+					weight = int(weight)
+
+				athlete[athlete_name] = {'sex': row[2], 'birth_year': birth_year, 'height': height, 'weight': weight}
 	return athlete
 
 def get_games():
@@ -132,16 +144,16 @@ def match_results_and_write(athletes, games, events, nocs):
 
 
 def main():
-	athletes = assign_ids(get_athletes())
-	games = assign_ids(get_games())
-	events = assign_ids(get_events())
+	# athletes = assign_ids(get_athletes())
+	# games = assign_ids(get_games())
+	# events = assign_ids(get_events())
 	nocs = assign_ids(get_nocs())
 
-	write_to_CSV(athletes,'athletes.csv')
-	write_to_CSV(games, 'games.csv')
-	write_to_CSV(events, 'events.csv')
+	# write_to_CSV(athletes,'athletes.csv')
+	# write_to_CSV(games, 'games.csv')
+	# write_to_CSV(events, 'events.csv')
 	write_to_CSV(nocs, 'nocs.csv')
-
-	match_results_and_write(athletes, games, events, nocs)
+	#
+	# match_results_and_write(athletes, games, events, nocs)
 
 main()
