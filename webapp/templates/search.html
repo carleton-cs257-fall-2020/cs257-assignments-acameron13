@@ -4,13 +4,13 @@
 	<head>
 	  <meta charset="UTF-8">
 	  <title>Olympics</title>
-	  <link rel="stylesheet" href="index.css" type="text/css" />
+	  <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}" type="text/css" />
 	</head>
 
 	<body>
 		<div id="top">
     		<div class="logo">
-     			<img src="assets/olympic_rings.png" height="75" alt="logo">
+     			<img src="{{ url_for('static', filename='olympic_rings.png') }}" height="75" alt="logo">
     		</div>
     		<div class="topnav">
       			<a href="index.html">Graphs</a>

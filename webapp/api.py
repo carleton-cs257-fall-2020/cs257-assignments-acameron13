@@ -10,7 +10,8 @@ from config import user
 from config import password
 from config import database
 
-app = flask.Flask(__name__)
+#app = flask.Flask(__name__)
+api = flask.Blueprint('api', __name__)
 
 def get_psql_cursor():
 	'''
@@ -25,7 +26,7 @@ def get_psql_cursor():
 
 	return cursor
 
-@app.route('/olympics/search')
+@api.route('/olympics/search')
 def get_search_results():
     athlete = flask.request.args.get('athlete')
     team = flask.request.args.get('team')

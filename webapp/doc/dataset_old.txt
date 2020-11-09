@@ -1,0 +1,78 @@
+Adam Nik and Alison Cameron
+
+Dataset: https://www.kaggle.com/heesoo37/120-years-of-olympic-history-athletes-and-results
+
+	Our dataset is data from Olympic athletes, events, and results from the past 120 years, including both Summer and Winter games.
+The data includes every athlete that competed with their respective team and country, along with physical characteristics.
+
+Tables:
+
+CREATE TABLE athletes (
+	id SERIAL,
+	name TEXT,
+	sex TEXT,
+	birth_year INT,
+	height INT,
+	weight INT,
+);
+
+CREATE TABLE countries (
+	id SERIAL,
+	noc TEXT,
+	team TEXT,
+	country TEXT,
+);
+
+CREATE TABLE games (
+	id SERIAL,
+	year INT,
+	season TEXT,
+	city TEXT,
+);
+
+CREATE TABLE events (
+	id SERIAL,
+	event TEXT,
+	sport TEXT,
+);
+
+CREATE TABLE medals (
+	id SERIAL,
+	medal TEXT,
+);
+
+CREATE TABLE results (
+	athlete_id INT,
+	country_id INT,
+	game_id INT,
+	event_id INT,
+	medal_id INT,
+);
+
+
+Stories:
+
+STORY: I'm a gambler and it's time to make some money this upcoming Olympic Games. I need statistics on which countries have been
+most productive in winning medals so I can make a confident bet on the medal counts for these games.
+
+IMPLEMENTATION: We want to have a data visualization that shows a line graph of the total medals for a given country for each year. We will have a
+default setting that places the line segments of every country on one graph. From there, a user can specify a country and/or an event of which they want to
+analyze alone (a visualization similar to the baby name website we talked about in class). We are planning to have a drop down menu to help the 
+user specify the given field they want to analyze.
+
+
+STORY: My name is Alison and I am a swimmer on the Carleton Swim & Dive team. I want to prove to my friends that Katie Ledecky is the greatest
+female swimmer of all time. I want to know how many medals she has won at the Olympics games throughout her career.
+
+IMPLEMENTATION: In a search tab, we will have the user search for their wanted results by searching with keyword for athlete, and drop-down menus
+for the other fields (games, sport, event, team, etc). Results will be displayed in a table, which will have options to be sorted by each column.
+
+
+STORY: I'm a traveler and I am planning on taking a trip to China this summer. I know one of my destinations will be Beijing, China, and I am interested
+in learning more about the results from the 2008 games that were held there.
+
+IMPLEMENTATION: We want to have a data visualization that is a map of the world and includes dots that represent every city that has hosted an Olympic Games. 
+We also plan to shade in countries based on how many medals they have won over time. When hovering over the dots, they expand and tell the user which 
+year(s) those games were held. From there, a user can click on the dot and the site will take them to the search portion of the website where the games field 
+is already selected with the games they chose. (We're not sure exactly how to implement this but we are excited for the idea of doing it!)
+

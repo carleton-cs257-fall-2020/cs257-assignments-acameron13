@@ -144,6 +144,7 @@ def match_results_and_write(athletes, games, events, nocs):
 
 
 def main():
+	#print(assign_ids(get_nocs()))
 	# athletes = assign_ids(get_athletes())
 	# games = assign_ids(get_games())
 	# events = assign_ids(get_events())
