@@ -44,16 +44,16 @@ def get_search_results():
                 AND results.athlete_id=athletes.id'''
 
         if athlete is not None:
-            query += 'AND athletes.name={}'.format(athlete)
+            query += ' AND athletes.id={}'.format(athlete)
         if team is not None:
-            query += 'AND countries.noc={}'.format(team)
+            query += ' AND countries.id={}'.format(team)
         if games is not None:
             #just get the year
-            query += 'AND games.year={}'.format(games[0:4])
+            query += ' AND games.id={}'.format(games)
         if sport is not None:
-            query += 'AND events.sport={}'.format(sport)
+            query += ' AND events.id={}'.format(sport)
         if event is not None:
-            query += 'AND events.event={}'.format(event)
+            query += ' AND events.id={}'.format(event)
 
         cursor = get_psql_cursor()
         cursor.execute(query)
