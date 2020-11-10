@@ -34,31 +34,31 @@ def get_search_results():
     sport = flask.request.args.get('sport')
     event = flask.request.args.get('event')
 
-	try:
-		query = '''SELECT results.game_id, results.country_id, results.event_id, results.medal_id, results.athlete_id, games.id, countries.id, events.id, medals.id, athletes.id, games.year, games.season, countries.noc, events.sport, events.event, medals.medal, athletes.name, athletes.sex, athletes.height, athletes.weight, athletes.birth_year
-                FROM results, games, countries, events, medals, athletes
-                WHERE results.game_id=games.id
+    try:
+        query = '''SELECT results.game_id, results.country_id, results.event_id, results.medal_id, results.athlete_id, games.id, countries.id, events.id, medals.id, athletes.id, games.year, games.season, countries.noc, events.sport, events.event, medals.medal, athletes.name, athletes.sex, athletes.height, athletes.weight, athletes.birth_year
+				FROM results, games, countries, events, medals, athletes
+				WHERE results.game_id=games.id
                 AND results.country_id=countries.id
                 AND results.event_id=events.id
                 AND results.medal_id=medals.id
                 AND results.athlete_id=athletes.id'''
 
-		opt_params = [athlete, team, games, sport, event]
-		param_names = []
-		for i in range(len(opt_params)):
-			param = opt_params[i]
-			if param is not None:
-				param_names.append(param)
-				if i == 0:
-					query += ' AND athletes.name=%s'
-				elif i == 1:
-					query += ' AND countries.noc=%s'
-				elif i == 2:
-					query += ' AND games.year=%s'
-				elif i == 3:
-					query += ' AND events.sport=%s'
-				elif i == 4:
-					query += ' AND events.event=%s'
+        opt_params = [athlete, team, games, sport, event]
+        param_names = []
+        for i in range(len(opt_params)):
+            param = opt_params[i]
+            if param is not None:
+                param_names.append(param)
+                if i == 0:
+                    query += ' AND athletes.name=%s'
+                elif i == 1:
+                    query += ' AND countries.noc=%s'
+                elif i == 2:
+                    query += ' AND games.year=%s'
+                elif i == 3:
+                    query += ' AND events.sport=%s'
+                elif i == 4:
+                    query += ' AND events.event=%s'
 
         cursor = get_psql_cursor()
         cursor.execute(query, tuple(param_names))
