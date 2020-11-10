@@ -59,9 +59,15 @@ def get_search_results():
                     query += ' AND events.sport=%s'
                 elif i == 4:
                     query += ' AND events.event=%s'
+                    
+        query += ' LIMIT 20'
+
+	
 
         cursor = get_psql_cursor()
         cursor.execute(query, tuple(param_names))
+        
+        print("hello ", cursor.rowcount)
 
     except Exception as e:
         print(e)
