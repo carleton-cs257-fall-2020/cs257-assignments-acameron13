@@ -1,12 +1,12 @@
 // Alison Cameron and Adam Nik
 
-window.onload = initialize;
+window.onload = tableOnClicked;
 
 
-function initialize() {
-	var element = document.getElementById('search_submit');
-	element.onclick = tableOnClicked;
-}
+// function initialize() {
+// 	var element = document.getElementById('search_submit');
+// 	element.onclick = tableOnClicked;
+// }
 
 function getAPIBaseURL() {
     var baseURL = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/api';
@@ -14,8 +14,8 @@ function getAPIBaseURL() {
 }
 
 function tableOnClicked() {
+	console.log('table!!')
 	var url = getAPIBaseURL() + '/olympics/search';
-	// var url = 'http://localhost:5000/api/olympics/search?team=USA&games=2000'
 
 //     Send the request to the Books API /authors/ endpoint
     fetch(url, {method: 'get'})
