@@ -1,6 +1,6 @@
 // Alison Cameron and Adam Nik
 
-window.onload = initialize;
+window.onload = propogateGamesDropdown;
 
 
 function initialize() {
@@ -58,8 +58,31 @@ function tableOnClicked() {
     });
 }
 
+function propogateGamesDropdown(){
+    var url = getAPIBaseURL() + '/olympics/dropdowns/games';
+    fetch(url, {method: 'get'})
 
+//     When the results come back, transform them from a JSON string into
+//     a Javascript object (in this case, a list of author dictionaries).
+    .then((response) => response.json())
 
+//     Once you have your list of author dictionaries, use it to build
+//     an HTML table displaying the author names and lifespan.
+    .then(function(results){
+        dropdown_options = '';
+        for (var k = 0; k < results.length; k++){
+                games = results[k]['year'] + ' ' + results[k]['season'];
+                dropdown_options += '<option value="'+games+'">';
+        }
+        console.log(dropdown_options);
+        var gamesDropdownElement = document.getElementById('games_dropdown');
+		if (gamesDropdownElement) {
+			gamesDropdownElement.innerHTML = dropdown_options;
+		}
 
+    })
 
-
+    .catch(function(error) {
+        console.log(error);
+    });
+}
