@@ -66,8 +66,6 @@ def get_search_results():
 
         cursor = get_psql_cursor()
         cursor.execute(query, tuple(param_names))
-        
-        print("hello ", cursor.rowcount)
 
     except Exception as e:
         print(e)

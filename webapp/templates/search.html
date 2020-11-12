@@ -6,6 +6,7 @@
 	  <title>Olympics</title>
 	  <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}" type="text/css" />
 	  <script type="text/javascript" src="{{ url_for('static', filename='index.js') }}" ></script>
+	  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
 	</head>
 
 	<body>
@@ -47,8 +48,8 @@
 				<option value="Michael Phelps">
 			</datalist>
 
-			<!-- <input type="submit" value="Submit" id="search_submit"> -->
-			<button id="search_submit">Submit</button></p>
+			<!-- <input type="submit" id="search_submit" onClick="tableOnClicked()"></input> -->
+			<button id="search_submit">Submit</button>
 		</form>
 
 		<!-- <table id="results"></table> -->

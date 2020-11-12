@@ -1,6 +1,6 @@
 // Alison Cameron and Adam Nik
 
-window.onload = tableOnClicked;
+window.onload = initialize;
 
 
 function initialize() {
@@ -14,11 +14,9 @@ function getAPIBaseURL() {
 }
 
 function tableOnClicked() {
-// 	console.log('Hola amigo');
 	var url = getAPIBaseURL() + '/olympics/search';
-    
-//     })
-	
+	// var url = 'http://localhost:5000/api/olympics/search?team=USA&games=2000'
+
 //     Send the request to the Books API /authors/ endpoint
     fetch(url, {method: 'get'})
 
