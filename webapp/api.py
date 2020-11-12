@@ -59,10 +59,10 @@ def get_search_results():
                     query += ' AND events.sport=%s'
                 elif i == 4:
                     query += ' AND events.event=%s'
-                    
+
         query += ' LIMIT 20'
 
-	
+
 
         cursor = get_psql_cursor()
         cursor.execute(query, tuple(param_names))
@@ -90,6 +90,25 @@ def get_search_results():
         table_data.append(table_entry)
 
     return json.dumps(table_data)
+
+@api.route('olympics/dropdowns/games')
+def get_games():
+    try:
+        query = '''SELECT games.year, games.season
+                    FROM games'''
+
+        cursor = get_psql_cursor()
+        cursor.execute(query)
+
+    except Exception as e:
+        print(e)
+        exit()
+
+    all_data = []
+    for row in cursor:
+        all_data.append({'year': row[0], 'season': row[1]})
+    return json.dumps(all_data)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('A sample Flask application/API')
