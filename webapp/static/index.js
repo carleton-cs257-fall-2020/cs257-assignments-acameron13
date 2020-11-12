@@ -1,7 +1,7 @@
 // Alison Cameron and Adam Nik
 
 
-window.onload = propogateGamesDropdown;
+window.onload = tableOnClicked;
 
 
 
@@ -16,7 +16,6 @@ function getAPIBaseURL() {
 }
 
 function tableOnClicked() {
-	console.log('table!!')
 	var url = getAPIBaseURL() + '/olympics/search';
 
 //     Send the request to the Books API /authors/ endpoint
