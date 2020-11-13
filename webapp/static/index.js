@@ -4,23 +4,17 @@ window.onload = initialize;
 
 function initialize() {
 
-    // document.getElementById('search_submit').addEventListener("click", function(event){
-//         tableOnClicked();
-//         event.preventDefault()
-//     });
-
 	propogateGamesDropdown();
 	propogateDropdown('teams');
 	propogateDropdown('sports');
 	propogateDropdown('events');
 	propogateDropdown('athletes');
+	var element = document.getElementById('search_submit');
+	element.onclick = tableOnClicked;
 
 }
 
-// function initialize() {
-// 	var element = document.getElementById('search_submit');
-// 	element.onclick = tableOnClicked;
-// }
+
 
 function getAPIBaseURL() {
     var baseURL = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/api';
@@ -129,5 +123,19 @@ function propogateDropdown(field){
     });
     
 }
+
+function get_dropdown_values(){
+	var games_value = document.getElementById('games_btn').value;
+	var teams_value = document.getElementById('teams_btn').value;
+	var sports_value = document.getElementById('sports_btn').value;
+	var events_value = document.getElementById('events_btn').value;
+	var athletes_value = document.getElementById('athletes_btn').value;
+	
+	console.log('games_btn')
+	
+
+}
+
+
 
 
