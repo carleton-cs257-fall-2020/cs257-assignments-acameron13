@@ -23,6 +23,9 @@ function getAPIBaseURL() {
 
 function tableOnClicked() {
 	var url = getAPIBaseURL() + '/olympics/search';
+    var addition = get_dropdown_values();
+    url += addition;
+    console.log(url)
 
 //     Send the request to the Books API /authors/ endpoint
     fetch(url, {method: 'get'})
@@ -88,11 +91,11 @@ function propogateGamesDropdown(){
 		}
 
     })
-	
+
     .catch(function(error) {
         console.log(error);
     });
-    
+
 }
 
 function propogateDropdown(field){
@@ -117,11 +120,11 @@ function propogateDropdown(field){
 		}
 
     })
-	
+
     .catch(function(error) {
         console.log(error);
     });
-    
+
 }
 
 function get_dropdown_values(){
@@ -130,12 +133,19 @@ function get_dropdown_values(){
 	var sports_value = document.getElementById('sports_btn').value;
 	var events_value = document.getElementById('events_btn').value;
 	var athletes_value = document.getElementById('athletes_btn').value;
-	
-	console.log('games_btn')
-	
 
+	var search_params = {'games': games_value, 'team': teams_value,
+                    'sport': sports_value, 'event': events_value,
+                    'athlete': athletes_value};
+
+    var api_addition = '?';
+    for (var param in search_params){
+        if(param == 'games' && search_params[param]){
+            api_addition += param + '=' + search_params[param].slice(0,4) + '&';
+        }
+        else if (param != 'games' && search_params[param]){
+            api_addition += param + '=' + search_params[param] + '&';
+        }
+    }
+    return api_addition;
 }
-
-
-
-
