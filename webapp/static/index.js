@@ -1,16 +1,21 @@
 // Alison Cameron and Adam Nik
 
+window.onload = initialize;
 
-window.onload = propogateGamesDropdown;
+function initialize() {
 
-// function initialize() {
-// 
-//     document.getElementById('search_submit').addEventListener("click", function(event){
+    // document.getElementById('search_submit').addEventListener("click", function(event){
 //         tableOnClicked();
 //         event.preventDefault()
 //     });
-// 
-// }
+
+	propogateGamesDropdown();
+	propogateDropdown('teams');
+	propogateDropdown('sports');
+	propogateDropdown('events');
+	propogateDropdown('athletes');
+
+}
 
 // function initialize() {
 // 	var element = document.getElementById('search_submit');
@@ -82,7 +87,7 @@ function propogateGamesDropdown(){
                 games = results[k]['year'] + ' ' + results[k]['season'];
                 dropdown_options += '<option value="'+games+'">';
         }
-        console.log(dropdown_options);
+
         var gamesDropdownElement = document.getElementById('games_dropdown');
 		if (gamesDropdownElement) {
 			gamesDropdownElement.innerHTML = dropdown_options;
@@ -95,3 +100,34 @@ function propogateGamesDropdown(){
     });
     
 }
+
+function propogateDropdown(field){
+    var url = getAPIBaseURL() + '/olympics/dropdowns/' + field;
+    fetch(url, {method: 'get'})
+
+//     When the results come back, transform them from a JSON string into
+//     a Javascript object (in this case, a list of author dictionaries).
+    .then((response) => response.json())
+
+//     Once you have your list of author dictionaries, use it to build
+//     an HTML table displaying the author names and lifespan.
+    .then(function(results){
+        var dropdown_options = '';
+        for (var k = 0; k < results.length; k++){
+                dropdown_options += '<option value="'+results[k]+'">';
+        }
+
+        var dropdownElement = document.getElementById(field+'_dropdown');
+		if (dropdownElement) {
+			dropdownElement.innerHTML = dropdown_options;
+		}
+
+    })
+	
+    .catch(function(error) {
+        console.log(error);
+    });
+    
+}
+
+
