@@ -107,7 +107,8 @@ def get_games():
     all_data = []
     for row in cursor:
         all_data.append({'year': row[0], 'season': row[1]})
-    return json.dumps(all_data)
+    sorted_all_data = sorted(all_data, key=lambda x: x['year'], reverse=True)
+    return json.dumps(sorted_all_data)
 
 
 if __name__ == '__main__':

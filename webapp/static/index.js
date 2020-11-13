@@ -1,9 +1,16 @@
 // Alison Cameron and Adam Nik
 
 
-window.onload = tableOnClicked;
+window.onload = propogateGamesDropdown;
 
-
+// function initialize() {
+// 
+//     document.getElementById('search_submit').addEventListener("click", function(event){
+//         tableOnClicked();
+//         event.preventDefault()
+//     });
+// 
+// }
 
 // function initialize() {
 // 	var element = document.getElementById('search_submit');
@@ -70,7 +77,7 @@ function propogateGamesDropdown(){
 //     Once you have your list of author dictionaries, use it to build
 //     an HTML table displaying the author names and lifespan.
     .then(function(results){
-        dropdown_options = '';
+        var dropdown_options = '';
         for (var k = 0; k < results.length; k++){
                 games = results[k]['year'] + ' ' + results[k]['season'];
                 dropdown_options += '<option value="'+games+'">';
@@ -82,8 +89,9 @@ function propogateGamesDropdown(){
 		}
 
     })
-
+	
     .catch(function(error) {
         console.log(error);
     });
+    
 }
