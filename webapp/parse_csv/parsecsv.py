@@ -135,7 +135,7 @@ def match_results_and_write(athletes, games, events, nocs):
 			medal_id = medal_ids[medal]
 			athlete_id = athletes[athlete]['id']
 
-			results.append([year_id, noc_id, event_id, medal_id, athlete_id])
+			results.append([year_id, noc_id, event_id, medal_id, athlete_id, len(results)])
 
 	with open("results.csv", 'w', newline='') as newf:
 		writer = csv.writer(newf)
@@ -145,16 +145,16 @@ def match_results_and_write(athletes, games, events, nocs):
 
 def main():
 	#print(assign_ids(get_nocs()))
-	# athletes = assign_ids(get_athletes())
-	# games = assign_ids(get_games())
-	# events = assign_ids(get_events())
+	athletes = assign_ids(get_athletes())
+	games = assign_ids(get_games())
+	events = assign_ids(get_events())
 	nocs = assign_ids(get_nocs())
 
 	# write_to_CSV(athletes,'athletes.csv')
 	# write_to_CSV(games, 'games.csv')
 	# write_to_CSV(events, 'events.csv')
-	write_to_CSV(nocs, 'nocs.csv')
+	# write_to_CSV(nocs, 'nocs.csv')
 	#
-	# match_results_and_write(athletes, games, events, nocs)
+	match_results_and_write(athletes, games, events, nocs)
 
 main()

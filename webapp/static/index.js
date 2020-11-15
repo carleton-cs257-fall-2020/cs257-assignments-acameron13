@@ -1,5 +1,6 @@
 // Alison Cameron and Adam Nik
 
+var pageNum = 1;
 window.onload = initialize;
 
 function initialize() {
@@ -9,8 +10,12 @@ function initialize() {
 	propogateDropdown('sports');
 	propogateDropdown('events');
 	propogateDropdown('athletes');
-	var element = document.getElementById('search_submit');
-	element.onclick = tableOnClicked;
+	var submit = document.getElementById('search_submit');
+	submit.onclick = tableOnClicked;
+	var back = document.getElementById('back');
+	var forward = document.getElementById('forward');
+	forward.onclick = increase_page_number;
+	back.onclick = decrease_page_number;
 
 }
 
@@ -25,6 +30,7 @@ function tableOnClicked() {
 	var url = getAPIBaseURL() + '/olympics/search';
     var addition = get_dropdown_values();
     url += addition;
+    url += 'page=' + pageNum;
     console.log(url)
 
 //     Send the request to the Books API /authors/ endpoint
@@ -148,4 +154,14 @@ function get_dropdown_values(){
         }
     }
     return api_addition;
+}
+
+function increase_page_number(){
+	pageNum++;
+	tableOnClicked();
+}
+
+function decrease_page_number(){
+	pageNum--;
+	tableOnClicked();
 }

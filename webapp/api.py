@@ -33,6 +33,7 @@ def get_search_results():
     games = flask.request.args.get('games')
     sport = flask.request.args.get('sport')
     event = flask.request.args.get('event')
+    page = flask.request.args.get('page')
 
     try:
         query = '''SELECT results.game_id, results.country_id, results.event_id, results.medal_id, results.athlete_id, games.id, countries.id, events.id, medals.id, athletes.id, games.year, games.season, countries.noc, events.sport, events.event, medals.medal, athletes.name, athletes.sex, athletes.height, athletes.weight, athletes.birth_year
@@ -59,6 +60,9 @@ def get_search_results():
                     query += ' AND events.sport=%s'
                 elif i == 4:
                     query += ' AND events.event=%s'
+                    
+        if page is not None: 	
+        	query += ' AND results.id>={}'.format((int(page)-1) * 20)
 
         query += ' LIMIT 20'
 
