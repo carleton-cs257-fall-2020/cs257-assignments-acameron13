@@ -1,6 +1,7 @@
 // Alison Cameron and Adam Nik
 
-var pageNum = 1;
+var lastEntry = -1;
+var firstEntry = 20;
 window.onload = initialize;
 
 function initialize() {
@@ -11,11 +12,11 @@ function initialize() {
 	propogateDropdown('events');
 	propogateDropdown('athletes');
 	var submit = document.getElementById('search_submit');
-	submit.onclick = tableOnClicked;
+	submit.onclick = tableOnClicked('none');
 	var back = document.getElementById('back');
 	var forward = document.getElementById('forward');
-	forward.onclick = increase_page_number;
-	back.onclick = decrease_page_number;
+	forward.onclick = tableOnClicked('forward');
+	back.onclick = tableOnClicked('backward');
 
 }
 
@@ -26,12 +27,18 @@ function getAPIBaseURL() {
     return baseURL;
 }
 
-function tableOnClicked() {
+function tableOnClicked(direction) {
 	var url = getAPIBaseURL() + '/olympics/search';
     var addition = get_dropdown_values();
     url += addition;
-    url += 'page=' + pageNum;
-    console.log(url)
+    if (direction == 'forward'){
+        url += 'last_entry=' + lastEntry;
+    }
+    else if (direction == 'backward'){
+        url += 'first_entry=' + firstEntry;
+    }
+    console.log(direction);
+    console.log(url);
 
 //     Send the request to the Books API /authors/ endpoint
     fetch(url, {method: 'get'})
@@ -44,8 +51,12 @@ function tableOnClicked() {
 //     an HTML table displaying the author names and lifespan.
     .then(function(results) {
         // Build the table body.
+        firstEntry = results[0];
+        lastEntry = results[1];
+        console.log(firstEntry);
+        console.log(lastEntry);
         var tableBody = '<tr><th>Games</th><th>Team</th><th>Sport</th><th>Event</th><th>Medal</th><th>Athlete</th><th>Sex</th><th>Height</th><th>Weight</th><th>Birth Year</th></tr>';
-        for (var k = 0; k < results.length; k++) {
+        for (var k = 2; k < results.length; k++) {
             tableBody += '<tr>';
 
             tableBody += '<td>' + results[k]['games'] + '</td>'
@@ -154,14 +165,4 @@ function get_dropdown_values(){
         }
     }
     return api_addition;
-}
-
-function increase_page_number(){
-	pageNum++;
-	tableOnClicked();
-}
-
-function decrease_page_number(){
-	pageNum--;
-	tableOnClicked();
 }

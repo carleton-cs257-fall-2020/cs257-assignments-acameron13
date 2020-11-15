@@ -33,10 +33,11 @@ def get_search_results():
     games = flask.request.args.get('games')
     sport = flask.request.args.get('sport')
     event = flask.request.args.get('event')
-    page = flask.request.args.get('page')
+    first_entry = flask.request.args.get('first_entry')
+    last_entry = flask.request.args.get('last_entry')
 
     try:
-        query = '''SELECT results.game_id, results.country_id, results.event_id, results.medal_id, results.athlete_id, games.id, countries.id, events.id, medals.id, athletes.id, games.year, games.season, countries.noc, events.sport, events.event, medals.medal, athletes.name, athletes.sex, athletes.height, athletes.weight, athletes.birth_year
+        query = '''SELECT results.game_id, results.country_id, results.event_id, results.medal_id, results.athlete_id, games.id, countries.id, events.id, medals.id, athletes.id, games.year, games.season, countries.noc, events.sport, events.event, medals.medal, athletes.name, athletes.sex, athletes.height, athletes.weight, athletes.birth_year, results.id
 				FROM results, games, countries, events, medals, athletes
 				WHERE results.game_id=games.id
                 AND results.country_id=countries.id
@@ -60,9 +61,11 @@ def get_search_results():
                     query += ' AND events.sport=%s'
                 elif i == 4:
                     query += ' AND events.event=%s'
-                    
-        if page is not None: 	
-        	query += ' AND results.id>={}'.format((int(page)-1) * 20)
+
+        if last_entry is not None:
+        	query += ' AND results.id>={}'.format(last_entry)
+        if first_entry is not None:
+            query += ' AND results.id<{}'.format(first_entry)
 
         query += ' LIMIT 20'
 
@@ -75,7 +78,8 @@ def get_search_results():
         print(e)
         exit()
 
-    table_data = []
+    table_data = [None, None]
+    first = True
     for row in cursor:
         year, season, noc, sport, event = row[10], row[11], row[12], row[13], row[14]
         medal, athlete, sex, height, weight, birth_year = row[15], row[16], row[17], row[18], row[19], row[20]
@@ -92,6 +96,11 @@ def get_search_results():
                         'birth year': birth_year}
 
         table_data.append(table_entry)
+        if first:
+            table_data[0] = row[21]
+            first = False
+
+        table_data[1] = row[21]
 
     return json.dumps(table_data)
 
@@ -113,7 +122,7 @@ def get_games():
         all_data.append({'year': row[0], 'season': row[1]})
     sorted_all_data = sorted(all_data, key=lambda x: x['year'], reverse=True)
     return json.dumps(sorted_all_data)
-    
+
 @api.route('olympics/dropdowns/teams')
 def get_teams():
     try:
@@ -131,7 +140,7 @@ def get_teams():
         all_data.append(row)
     sorted_all_data = sorted(all_data)
     return json.dumps(sorted_all_data)
-    
+
 @api.route('olympics/dropdowns/sports')
 def get_sports():
     try:
@@ -150,7 +159,7 @@ def get_sports():
         	all_data.append(row)
     sorted_all_data = sorted(all_data)
     return json.dumps(sorted_all_data)
-    
+
 @api.route('olympics/dropdowns/events')
 def get_events():
     try:
@@ -168,7 +177,7 @@ def get_events():
         all_data.append(row)
     sorted_all_data = sorted(all_data)
     return json.dumps(sorted_all_data)
-    
+
 @api.route('olympics/dropdowns/athletes')
 def get_athletes():
     try:
@@ -186,7 +195,7 @@ def get_athletes():
         all_data.append(row)
     sorted_all_data = sorted(all_data)
     return json.dumps(sorted_all_data)
-    
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('A sample Flask application/API')
