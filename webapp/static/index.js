@@ -3,7 +3,7 @@
 var direction = ''
 var lastEntry = -1;
 var firstEntry = 20;
-var prevLastEntry = -1;
+var prevFirstEntry = -1;
 window.onload = initialize;
 
 function initialize() {
@@ -39,7 +39,7 @@ function tableOnClicked() {
         url += 'last_entry=' + lastEntry;
     }
     else if (direction == 'backward'){
-        url += 'first_entry=' + firstEntry; + '&prev_last_entry=' + prevLastEntry;
+        url += 'first_entry=' + firstEntry; + '&prev_first_entry=' + prevFirstEntry;
     }
     // console.log(direction);
     console.log(url);
@@ -55,12 +55,12 @@ function tableOnClicked() {
 //     an HTML table displaying the author names and lifespan.
     .then(function(results) {
         // Build the table body.
-        prevLastEntry = lastEntry;
+        prevFirstEntry = firstEntry;
         lastEntry = results[0];
         firstEntry = results[1];
         console.log(firstEntry);
         console.log(lastEntry);
-        console.log(prevLastEntry);
+        console.log(prevFirstEntry);
         var tableBody = '<tr><th>Games</th><th>Team</th><th>Sport</th><th>Event</th><th>Medal</th><th>Athlete</th><th>Sex</th><th>Height</th><th>Weight</th><th>Birth Year</th></tr>';
         for (var k = 2; k < results.length; k++) {
             tableBody += '<tr>';
