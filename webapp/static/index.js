@@ -1,5 +1,6 @@
 // Alison Cameron and Adam Nik
 
+var direction = ''
 var lastEntry = -1;
 var firstEntry = 20;
 window.onload = initialize;
@@ -11,12 +12,14 @@ function initialize() {
 	propogateDropdown('sports');
 	propogateDropdown('events');
 	propogateDropdown('athletes');
+	console.log(lastEntry)
 	var submit = document.getElementById('search_submit');
-	submit.onclick = tableOnClicked('none');
+	submit.onclick = tableOnClicked;
+	console.log(lastEntry)
 	var back = document.getElementById('back');
 	var forward = document.getElementById('forward');
-	forward.onclick = tableOnClicked('forward');
-	back.onclick = tableOnClicked('backward');
+	forward.onclick = go_forward;
+	back.onclick = go_backward;
 
 }
 
@@ -27,9 +30,10 @@ function getAPIBaseURL() {
     return baseURL;
 }
 
-function tableOnClicked(direction) {
+function tableOnClicked() {
 	var url = getAPIBaseURL() + '/olympics/search';
     var addition = get_dropdown_values();
+    var return_entry;
     url += addition;
     if (direction == 'forward'){
         url += 'last_entry=' + lastEntry;
@@ -37,7 +41,7 @@ function tableOnClicked(direction) {
     else if (direction == 'backward'){
         url += 'first_entry=' + firstEntry;
     }
-    console.log(direction);
+    // console.log(direction);
     console.log(url);
 
 //     Send the request to the Books API /authors/ endpoint
@@ -51,8 +55,8 @@ function tableOnClicked(direction) {
 //     an HTML table displaying the author names and lifespan.
     .then(function(results) {
         // Build the table body.
-        firstEntry = results[0];
-        lastEntry = results[1];
+        lastEntry = results[0];
+        firstEntry = results[1];
         console.log(firstEntry);
         console.log(lastEntry);
         var tableBody = '<tr><th>Games</th><th>Team</th><th>Sport</th><th>Event</th><th>Medal</th><th>Athlete</th><th>Sex</th><th>Height</th><th>Weight</th><th>Birth Year</th></tr>';
@@ -77,12 +81,15 @@ function tableOnClicked(direction) {
 		if (resultsTableElement) {
 			resultsTableElement.innerHTML = tableBody;
 		}
+		
     })
+    
 
     // Log the error if anything went wrong during the fetch.
     .catch(function(error) {
         console.log(error);
     });
+    
 }
 
 function propogateGamesDropdown(){
@@ -165,4 +172,14 @@ function get_dropdown_values(){
         }
     }
     return api_addition;
+}
+
+function go_forward(){
+	direction = 'forward';
+	tableOnClicked();
+}
+
+function go_backward(){
+	direction = 'backward';
+	tableOnClicked();
 }

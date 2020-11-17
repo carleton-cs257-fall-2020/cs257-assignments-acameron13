@@ -97,11 +97,11 @@ def get_search_results():
 
         table_data.append(table_entry)
         if first:
-            table_data[0] = row[21]
+            table_data[1] = row[21]
             first = False
 
-        table_data[1] = row[21]
-
+        table_data[0] = row[21]
+			
     return json.dumps(table_data)
 
 @api.route('olympics/dropdowns/games')
