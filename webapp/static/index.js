@@ -3,6 +3,7 @@
 var direction = ''
 var lastEntry = -1;
 var firstEntry = 20;
+var prevLastEntry = -1;
 window.onload = initialize;
 
 function initialize() {
@@ -24,7 +25,6 @@ function initialize() {
 }
 
 
-
 function getAPIBaseURL() {
     var baseURL = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/api';
     return baseURL;
@@ -39,7 +39,7 @@ function tableOnClicked() {
         url += 'last_entry=' + lastEntry;
     }
     else if (direction == 'backward'){
-        url += 'first_entry=' + firstEntry;
+        url += 'first_entry=' + firstEntry; + '&prev_last_entry=' + prevLastEntry;
     }
     // console.log(direction);
     console.log(url);
@@ -55,10 +55,12 @@ function tableOnClicked() {
 //     an HTML table displaying the author names and lifespan.
     .then(function(results) {
         // Build the table body.
+        prevLastEntry = lastEntry;
         lastEntry = results[0];
         firstEntry = results[1];
         console.log(firstEntry);
         console.log(lastEntry);
+        console.log(prevLastEntry);
         var tableBody = '<tr><th>Games</th><th>Team</th><th>Sport</th><th>Event</th><th>Medal</th><th>Athlete</th><th>Sex</th><th>Height</th><th>Weight</th><th>Birth Year</th></tr>';
         for (var k = 2; k < results.length; k++) {
             tableBody += '<tr>';
@@ -81,15 +83,15 @@ function tableOnClicked() {
 		if (resultsTableElement) {
 			resultsTableElement.innerHTML = tableBody;
 		}
-		
+
     })
-    
+
 
     // Log the error if anything went wrong during the fetch.
     .catch(function(error) {
         console.log(error);
     });
-    
+
 }
 
 function propogateGamesDropdown(){

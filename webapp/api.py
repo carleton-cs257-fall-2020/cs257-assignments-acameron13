@@ -35,6 +35,7 @@ def get_search_results():
     event = flask.request.args.get('event')
     first_entry = flask.request.args.get('first_entry')
     last_entry = flask.request.args.get('last_entry')
+    prev_last_entry = flask.request.args.get('prev_last_entry')
 
     try:
         query = '''SELECT results.game_id, results.country_id, results.event_id, results.medal_id, results.athlete_id, games.id, countries.id, events.id, medals.id, athletes.id, games.year, games.season, countries.noc, events.sport, events.event, medals.medal, athletes.name, athletes.sex, athletes.height, athletes.weight, athletes.birth_year, results.id
@@ -63,9 +64,11 @@ def get_search_results():
                     query += ' AND events.event=%s'
 
         if last_entry is not None:
-        	query += ' AND results.id>={}'.format(last_entry)
+        	query += ' AND results.id>{}'.format(last_entry);
         if first_entry is not None:
-            query += ' AND results.id<{}'.format(first_entry)
+            query += ' AND results.id<={}'.format(first_entry);
+        if prev_last_entry is not None:
+            query += ' AND results.id>{}'.format(prev_last_entry);
 
         query += ' LIMIT 20'
 
@@ -101,7 +104,7 @@ def get_search_results():
             first = False
 
         table_data[0] = row[21]
-			
+
     return json.dumps(table_data)
 
 @api.route('olympics/dropdowns/games')
