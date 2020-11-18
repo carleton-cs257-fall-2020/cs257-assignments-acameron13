@@ -9,8 +9,13 @@
 <head>
   <meta charset="UTF-8">
   <title>Olympics</title>
+  <!-- These are required for the DataMaps library to work -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+  <!-- You need this one for the world map -->
+  <script src="{{ url_for('static', filename='datamaps.world.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='index.js') }}" ></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}" type="text/css" />
-<!--   <script type="text/javascript" src="{{ url_for('static', filename='index.js') }}" ></script> -->
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
 </head>
 
@@ -25,9 +30,9 @@
     </div>
   </div>
 
-  <div class="image">
-    <img src="{{ url_for('static', filename='map.png') }}" width="75%">
-  </div>
+    <!-- <img src="{{ url_for('static', filename='map.png') }}" width="75%"> -->
+  <div id="country-summary"></div>
+  <div id="map-container"></div>
 
   <hr class="linebreak" color=#0A0F50>
 
