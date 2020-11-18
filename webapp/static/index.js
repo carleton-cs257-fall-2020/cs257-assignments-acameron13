@@ -4,6 +4,8 @@ var direction = ''
 var lastEntry = -1;
 var firstEntry = 20;
 var prevFirstEntry = -1;
+var pageNum = 1
+var pageIndeces = {}
 window.onload = initialize;
 
 function initialize() {
@@ -15,7 +17,7 @@ function initialize() {
 	propogateDropdown('athletes');
 	console.log(lastEntry)
 	var submit = document.getElementById('search_submit');
-	submit.onclick = tableOnClicked;
+	submit.onclick = newQuery;
 	console.log(lastEntry)
 	var back = document.getElementById('back');
 	var forward = document.getElementById('forward');
@@ -30,16 +32,25 @@ function getAPIBaseURL() {
     return baseURL;
 }
 
-function tableOnClicked() {
+function tableOnClicked(pageNum) {
 	var url = getAPIBaseURL() + '/olympics/search';
     var addition = get_dropdown_values();
-    var return_entry;
     url += addition;
-    if (direction == 'forward'){
-        url += 'last_entry=' + lastEntry;
-    }
-    else if (direction == 'backward'){
-        url += 'first_entry=' + firstEntry; + '&prev_first_entry=' + prevFirstEntry;
+
+    if (pageNum in pageIndeces){
+        var indeces = pageIndeces[pageNum];
+        if (indeces[0] != null){
+            url += '&first_entry=' + indeces[0];
+        }
+        if (indeces[1] != null){
+            url += '&last_entry=' + indeces[1];
+        }
+    } else {
+        if (pageNum != 1){
+            prev_indeces = pageIndeces[pageNum - 1];
+            prev_last = prev_indeces[1];
+            url += '&prev_last_entry=' + prev_last;
+        }
     }
     // console.log(direction);
     console.log(url);
@@ -61,6 +72,10 @@ function tableOnClicked() {
         console.log(firstEntry);
         console.log(lastEntry);
         console.log(prevFirstEntry);
+        if (!(pageNum in pageIndeces)){
+            pageIndeces[pageNum] = [firstEntry, lastEntry];
+        }
+        console.log(pageIndeces[pageNum]);
         var tableBody = '<tr><th>Games</th><th>Team</th><th>Sport</th><th>Event</th><th>Medal</th><th>Athlete</th><th>Sex</th><th>Height</th><th>Weight</th><th>Birth Year</th></tr>';
         for (var k = 2; k < results.length; k++) {
             tableBody += '<tr>';
@@ -178,10 +193,18 @@ function get_dropdown_values(){
 
 function go_forward(){
 	direction = 'forward';
-	tableOnClicked();
+    pageNum ++;
+	tableOnClicked(pageNum);
 }
 
 function go_backward(){
 	direction = 'backward';
-	tableOnClicked();
+    pageNum --;
+	tableOnClicked(pageNum);
+}
+
+function newQuery(){
+    pageNum = 1
+    pageIndeces = {}
+    tableOnClicked(pageNum);
 }
