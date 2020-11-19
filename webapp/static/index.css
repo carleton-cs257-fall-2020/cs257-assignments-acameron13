@@ -156,7 +156,7 @@ hr.linebreak{
      * https://css-tricks.com/aspect-ratio-boxes/
      */
     height: 0;
-    width: 80%;
+    width: 100%;
     padding-bottom: 60%;
 
     /* My friend Shaun (Carleton CS '02) is even worse than I am at the details of
@@ -164,7 +164,7 @@ hr.linebreak{
      * his color choices, he makes stuff orange to force their hand. I am using
      * orange here both to remind you to change the color, and to make visible the
      * size and aspect ratio of the US map object. */
-    background: orange;
+    background: white;
 }
 
 #goals {
@@ -182,4 +182,3 @@ hr.linebreak{
     border: 1px black solid;
     padding: 3px;
 }
-

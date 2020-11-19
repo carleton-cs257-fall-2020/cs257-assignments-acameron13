@@ -199,6 +199,32 @@ def get_athletes():
     sorted_all_data = sorted(all_data)
     return json.dumps(sorted_all_data)
 
+@api.route('olympics/countries')
+def get_country_data():
+    try:
+        query = '''SELECT results.medal_id, countries.id, games.id, countries.noc, games.year, games.city, games.season
+                    FROM results, countries, games
+                    WHERE results.country_id = countries.id
+                    AND results.medal_id > 0
+                    AND results.game_id = games.id
+                    '''
+        cursor = get_psql_cursor()
+        cursor.execute(query)
+    except Exception as e:
+        print(e)
+        exit()
+
+    country_data = {}
+    for row in cursor:
+         noc = row[3]
+         if noc in country_data:
+             country_data[noc] += 1
+         else:
+             country_data[noc] = 1
+    country_data = sorted(country_data.items(), key=lambda item: item[1], reverse=True)
+    return json.dumps(country_data)
+
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('A sample Flask application/API')

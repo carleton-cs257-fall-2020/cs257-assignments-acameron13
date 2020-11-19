@@ -16,11 +16,11 @@ window.onload = initialize;
 // specifies the color those countries should be. There's also a default color specified
 // in the Datamap initializer below.
 var extraCountryInfo = {
-    GBR: {population: 66700000, jeffhasbeenthere: true, fillColor: '#2222aa'},
-    USA: {population: 328000000, jeffhasbeenthere: true, fillColor: '#2222aa'},
-    IND: {population: 1353000000, jeffhasbeenthere: false, fillColor: '#aa2222'},
-    JPN: {population: 125500000, jeffhasbeenthere: true, fillColor: '#aa2222'},
-    PRT: {population: 10300000, jeffhasbeenthere: true, fillColor: '#aa2222'},
+    GBR: {population: 66700000, jeffhasbeenthere: true},
+    USA: {population: 328000000, jeffhasbeenthere: true},
+    IND: {population: 1353000000, jeffhasbeenthere: false},
+    JPN: {population: 125500000, jeffhasbeenthere: true},
+    PRT: {population: 10300000, jeffhasbeenthere: true},
 };
 
 function initialize() {
@@ -33,13 +33,13 @@ function initializeMap() {
                             projection: 'equirectangular', // what map projection? 'mercator' is also an option
                             done: onMapDone, // once the map is loaded, call this function
                             data: extraCountryInfo, // here's some data that will be used by the popup template
-                            fills: { defaultFill: '#999999' },
+                            fills: { defaultFill: '#0A0F50' },
                             geographyConfig: {
                                 //popupOnHover: false, // You can disable the hover popup
                                 //highlightOnHover: false, // You can disable the color change on hover
                                 popupTemplate: hoverPopupTemplate, // call this to obtain the HTML for the hover popup
                                 borderColor: '#eeeeee', // state/country border color
-                                highlightFillColor: '#99dd99', // color when you hover on a state/country
+                                highlightFillColor: '#FFC300', // color when you hover on a state/country
                                 highlightBorderColor: '#000000', // border color when you hover on a state/country
                             }
                           });
