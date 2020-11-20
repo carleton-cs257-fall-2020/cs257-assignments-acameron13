@@ -214,15 +214,35 @@ def get_country_data():
         print(e)
         exit()
 
-    country_data = {}
+    medal_count_by_region = {}
     for row in cursor:
-         noc = row[3]
-         if noc in country_data:
-             country_data[noc] += 1
+         region = row[3]
+         if region in medal_count_by_region:
+             medal_count_by_region[region] += 1
          else:
-             country_data[noc] = 1
-   #  country_data = sorted(country_data.items(), key=lambda item: item[1], reverse=True)
-    return json.dumps(country_data)
+             medal_count_by_region[region] = 1
+   #  medal_count_by_region = sorted(medal_count_by_region.items(), key=lambda item: item[1], reverse=True)
+
+    try:
+        query = '''SELECT results.game_id, games.year, countries.id, countries.region, countries.noc
+                    FROM results, games, countries
+                    WHERE results.game_id = games.id
+                    AND games.year = 2016
+                    AND results.country_id = countries.id
+                    '''
+        cursor = get_psql_cursor()
+        cursor.execute(query)
+    except Exception as e:
+        print(e)
+        exit()
+
+    medal_count_by_noc = {}
+    for row in cursor:
+        region, noc = row[3], row[4]
+        if not(noc in medal_count_by_noc) and (region in medal_count_by_region):
+            medal_count_by_noc[noc] = medal_count_by_region[region]
+
+    return json.dumps(medal_count_by_noc)
 
 
 

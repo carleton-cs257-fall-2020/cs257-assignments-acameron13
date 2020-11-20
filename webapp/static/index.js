@@ -9,19 +9,13 @@
  * Datamaps is Copyright (c) 2012 Mark DiMarco
  * https://github.com/markmarkoh/datamaps
  */
-
+var extraCountryInfo = get_extra_country_info();
 window.onload = initialize;
 
 // This is example data that gets used in the click-handler below. Also, the fillColor
 // specifies the color those countries should be. There's also a default color specified
 // in the Datamap initializer below.
-var extraCountryInfo = {
-    // GBR: {population: 66700000, jeffhasbeenthere: true},
-//     USA: {population: 328000000, jeffhasbeenthere: true},
-//     IND: {population: 1353000000, jeffhasbeenthere: false},
-//     JPN: {population: 125500000, jeffhasbeenthere: true},
-//     PRT: {population: 10300000, jeffhasbeenthere: true},
-};
+
 
 function initialize() {
     initializeMap();
@@ -33,7 +27,7 @@ function getAPIBaseURL() {
 }
 
 function get_extra_country_info(){
-
+    var country_info = {};
 	var range0Fill = '#e6e7ed';
 	var range1Fill = '#b5b7ca';
 	var range2Fill = '#8487a7';
@@ -41,7 +35,7 @@ function get_extra_country_info(){
 	var range4Fill = '#3b3f73';
 	var range5Fill = '#0a0f50';
 	var url = getAPIBaseURL() + '/olympics/countries';
-	
+
     // console.log(direction);
     console.log(url);
 
@@ -58,27 +52,24 @@ function get_extra_country_info(){
         // Build the table body.
         for(var country in results){
         	var medal_count = results[country];
-        	var fillColor = null;
+        	var fill_color = null;
         	if (medal_count == 0){
-        		fillColor = range0Fill;
+        		fill_color = range0Fill;
         	} else if (medal_count > 0 && medal_count <= 1250){
-        		fillColor = range1Fill;
+        		fill_color = range1Fill;
         	} else if (medal_count > 1250 && medal_count <= 2500){
-        		fillColor = range2Fill;
+        		fill_color = range2Fill;
         	} else if (medal_count > 2500 && medal_count <= 3750){
-        		fillColor = range3Fill;
+        		fill_color = range3Fill;
         	} else if (medal_count > 3750 && medal_count <= 5000){
-        		fillColor = range4Fill;
+        		fill_color = range4Fill;
         	} else if (medal_count > 5000){
-        		fillColor = range5Fill;
+        		fill_color = range5Fill;
         	}
-		extraCountryInfo[country] = {'medal_count': medal_count, 'fillColor': fillColor};
+		country_info[country] = {'medal_count': medal_count, fillColor: fill_color};
+        console.log(country, medal_count, fill_color);
         }
-    });
-
-        // Put the table body we just built inside the table that's already on the page.
-
-    });
+    })
 
 
     // Log the error if anything went wrong during the fetch.
