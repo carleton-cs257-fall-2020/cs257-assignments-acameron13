@@ -16,15 +16,76 @@ window.onload = initialize;
 // specifies the color those countries should be. There's also a default color specified
 // in the Datamap initializer below.
 var extraCountryInfo = {
-    GBR: {population: 66700000, jeffhasbeenthere: true},
-    USA: {population: 328000000, jeffhasbeenthere: true},
-    IND: {population: 1353000000, jeffhasbeenthere: false},
-    JPN: {population: 125500000, jeffhasbeenthere: true},
-    PRT: {population: 10300000, jeffhasbeenthere: true},
+    // GBR: {population: 66700000, jeffhasbeenthere: true},
+//     USA: {population: 328000000, jeffhasbeenthere: true},
+//     IND: {population: 1353000000, jeffhasbeenthere: false},
+//     JPN: {population: 125500000, jeffhasbeenthere: true},
+//     PRT: {population: 10300000, jeffhasbeenthere: true},
 };
 
 function initialize() {
     initializeMap();
+}
+
+function getAPIBaseURL() {
+    var baseURL = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/api';
+    return baseURL;
+}
+
+function get_extra_country_info(){
+
+	var range0Fill = '#e6e7ed';
+	var range1Fill = '#b5b7ca';
+	var range2Fill = '#8487a7';
+	var range3Fill = '#535784';
+	var range4Fill = '#3b3f73';
+	var range5Fill = '#0a0f50';
+	var url = getAPIBaseURL() + '/olympics/countries';
+	
+    // console.log(direction);
+    console.log(url);
+
+//     Send the request to the Books API /authors/ endpoint
+    fetch(url, {method: 'get'})
+
+//     When the results come back, transform them from a JSON string into
+//     a Javascript object (in this case, a list of author dictionaries).
+    .then((response) => response.json())
+
+//     Once you have your list of author dictionaries, use it to build
+//     an HTML table displaying the author names and lifespan.
+    .then(function(results) {
+        // Build the table body.
+        for(var country in results){
+        	var medal_count = results[country];
+        	var fillColor = null;
+        	if (medal_count == 0){
+        		fillColor = range0Fill;
+        	} else if (medal_count > 0 && medal_count <= 1250){
+        		fillColor = range1Fill;
+        	} else if (medal_count > 1250 && medal_count <= 2500){
+        		fillColor = range2Fill;
+        	} else if (medal_count > 2500 && medal_count <= 3750){
+        		fillColor = range3Fill;
+        	} else if (medal_count > 3750 && medal_count <= 5000){
+        		fillColor = range4Fill;
+        	} else if (medal_count > 5000){
+        		fillColor = range5Fill;
+        	}
+		extraCountryInfo[country] = {'medal_count': medal_count, 'fillColor': fillColor};
+        }
+    });
+
+        // Put the table body we just built inside the table that's already on the page.
+
+    });
+
+
+    // Log the error if anything went wrong during the fetch.
+    .catch(function(error) {
+        console.log(error);
+    });
+
 }
 
 function initializeMap() {

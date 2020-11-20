@@ -202,7 +202,7 @@ def get_athletes():
 @api.route('olympics/countries')
 def get_country_data():
     try:
-        query = '''SELECT results.medal_id, countries.id, games.id, countries.noc, games.year, games.city, games.season
+        query = '''SELECT results.medal_id, countries.id, games.id, countries.region, games.year, games.city, games.season
                     FROM results, countries, games
                     WHERE results.country_id = countries.id
                     AND results.medal_id > 0
@@ -221,7 +221,7 @@ def get_country_data():
              country_data[noc] += 1
          else:
              country_data[noc] = 1
-    country_data = sorted(country_data.items(), key=lambda item: item[1], reverse=True)
+   #  country_data = sorted(country_data.items(), key=lambda item: item[1], reverse=True)
     return json.dumps(country_data)
 
 
