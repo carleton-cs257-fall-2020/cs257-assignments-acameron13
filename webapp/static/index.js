@@ -9,7 +9,7 @@
  * Datamaps is Copyright (c) 2012 Mark DiMarco
  * https://github.com/markmarkoh/datamaps
  */
-var extraCountryInfo = get_extra_country_info();
+var extraCountryInfo = {};
 window.onload = initialize;
 
 // This is example data that gets used in the click-handler below. Also, the fillColor
@@ -18,7 +18,8 @@ window.onload = initialize;
 
 
 function initialize() {
-    initializeMap();
+	get_extra_country_info();
+    // initializeMap();
 }
 
 function getAPIBaseURL() {
@@ -27,8 +28,7 @@ function getAPIBaseURL() {
 }
 
 function get_extra_country_info(){
-    var country_info = {};
-	var range0Fill = '#e6e7ed';
+
 	var range1Fill = '#b5b7ca';
 	var range2Fill = '#8487a7';
 	var range3Fill = '#535784';
@@ -49,13 +49,13 @@ function get_extra_country_info(){
 //     Once you have your list of author dictionaries, use it to build
 //     an HTML table displaying the author names and lifespan.
     .then(function(results) {
+    
         // Build the table body.
         for(var country in results){
         	var medal_count = results[country];
         	var fill_color = null;
-        	if (medal_count == 0){
-        		fill_color = range0Fill;
-        	} else if (medal_count > 0 && medal_count <= 1250){
+        	
+        	if (medal_count <= 1250){
         		fill_color = range1Fill;
         	} else if (medal_count > 1250 && medal_count <= 2500){
         		fill_color = range2Fill;
@@ -66,17 +66,18 @@ function get_extra_country_info(){
         	} else if (medal_count > 5000){
         		fill_color = range5Fill;
         	}
-		country_info[country] = {'medal_count': medal_count, fillColor: fill_color};
-        console.log(country, medal_count, fill_color);
+			// console.log(country, medal_count, fill_color)
+			extraCountryInfo[country] = {medalCount: medal_count, fillColor: fill_color};
+    		// console.log(country_info.country);
         }
+    	console.log(extraCountryInfo)
+    	initializeMap();
     })
-
 
     // Log the error if anything went wrong during the fetch.
     .catch(function(error) {
         console.log(error);
     });
-
 }
 
 function initializeMap() {
@@ -85,7 +86,7 @@ function initializeMap() {
                             projection: 'equirectangular', // what map projection? 'mercator' is also an option
                             done: onMapDone, // once the map is loaded, call this function
                             data: extraCountryInfo, // here's some data that will be used by the popup template
-                            fills: { defaultFill: '#0A0F50' },
+                            fills: { defaultFill: '#e6e7ed' },
                             geographyConfig: {
                                 //popupOnHover: false, // You can disable the hover popup
                                 //highlightOnHover: false, // You can disable the color change on hover
