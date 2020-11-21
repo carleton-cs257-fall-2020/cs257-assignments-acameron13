@@ -52,7 +52,7 @@ function get_extra_country_info(){
 
         // Build the table body.
         for(var country in results){
-        	var medal_count = results[country];
+        	var medal_count = results[country].medal_count;
         	var fill_color = null;
 
         	if (medal_count > 0 && medal_count <= 1250){
@@ -66,8 +66,13 @@ function get_extra_country_info(){
         	} else if (medal_count > 5000){
         		fill_color = range5Fill;
         	}
+
+            extraCountryInfo[country] = {medalCount: medal_count, fillColor: fill_color};
+
 			// console.log(country, medal_count, fill_color)
-			extraCountryInfo[country] = {medalCount: medal_count, fillColor: fill_color};
+            if (results[country].games_list){
+                extraCountryInfo[country].games_list = results[country].games_list;
+            }
     		// console.log(country_info.country);
         }
     	console.log(extraCountryInfo)
@@ -113,8 +118,17 @@ function hoverPopupTemplate(geography, data) {
     }
 
     var template = '<div class="hoverpopup"><strong>' + geography.properties.name + '</strong><br>\n'
-                    + '<strong>Total Medals:</strong> ' + medals + '<br>\n'
-                    + '</div>';
+                    + '<strong>Total Medals:</strong> ' + medals + '<br>\n';
+
+    if(data && extraCountryInfo[geography.id].games_list){
+        games_list = extraCountryInfo[geography.id].games_list;
+        for (i in games_list){
+            games = games_list[i];
+            template += games.year + ' ' + games.season + ', ' + games.city + '<br>\n';
+        }
+    }
+
+    template += '</div>';
     return template;
 }
 

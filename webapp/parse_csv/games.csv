@@ -1,35 +1,35 @@
-0,1992,Summer,Barcelona
-1,2012,Summer,London
-2,1920,Summer,Antwerpen
-3,1900,Summer,Paris
-4,1988,Winter,Calgary
-5,1994,Winter,Lillehammer
-6,1932,Summer,Los Angeles
-7,2002,Winter,Salt Lake City
-8,1952,Summer,Helsinki
-9,1980,Winter,Lake Placid
-10,2000,Summer,Sydney
-11,1996,Summer,Atlanta
-12,1912,Summer,Stockholm
-13,1924,Summer,Paris
-14,2014,Winter,Sochi
-15,1948,Summer,London
-16,1998,Winter,Nagano
-17,2006,Winter,Torino
-18,2008,Summer,Beijing
-19,2016,Summer,Rio de Janeiro
-20,2004,Summer,Athina
-21,1960,Winter,Squaw Valley
-22,1964,Winter,Innsbruck
-23,1984,Winter,Sarajevo
-24,1968,Summer,Mexico City
-25,1972,Summer,Munich
-26,1936,Summer,Berlin
-27,1956,Winter,Cortina d'Ampezzo
-28,1928,Summer,Amsterdam
-29,1976,Summer,Montreal
-30,2010,Winter,Vancouver
-31,1906,Summer,Athina
-32,1904,Summer,St. Louis
-33,1908,Summer,London
-34,1896,Summer,Athina
+0,1992,Summer,Barcelona,10
+1,2012,Summer,London,87
+2,1920,Summer,Antwerpen,50
+3,1900,Summer,Paris,8
+4,1988,Winter,Calgary,41
+5,1994,Winter,Lillehammer,5
+6,1932,Summer,Los Angeles,3
+7,2002,Winter,Salt Lake City,3
+8,1952,Summer,Helsinki,4
+9,1980,Winter,Lake Placid,3
+10,2000,Summer,Sydney,43
+11,1996,Summer,Atlanta,3
+12,1912,Summer,Stockholm,79
+13,1924,Summer,Paris,8
+14,2014,Winter,Sochi,18
+15,1948,Summer,London,87
+16,1998,Winter,Nagano,70
+17,2006,Winter,Torino,14
+18,2008,Summer,Beijing,0
+19,2016,Summer,Rio de Janeiro,73
+20,2004,Summer,Athens,22
+21,1960,Winter,Squaw Valley,3
+22,1964,Winter,Innsbruck,130
+23,1984,Winter,Sarajevo,169
+24,1968,Summer,Mexico City,26
+25,1972,Summer,Munich,40
+26,1936,Summer,Berlin,40
+27,1956,Winter,Cortina d'Ampezzo,14
+28,1928,Summer,Amsterdam,2
+29,1976,Summer,Montreal,41
+30,2010,Winter,Vancouver,41
+31,1906,Summer,Athens,22
+32,1904,Summer,St. Louis,3
+33,1908,Summer,London,87
+34,1896,Summer,Athens,22

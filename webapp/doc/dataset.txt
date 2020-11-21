@@ -27,7 +27,8 @@ CREATE TABLE games (
 	id SERIAL,
 	year INT,
 	season TEXT,
-	city TEXT
+	city TEXT,
+    country_id INT
 );
 
 CREATE TABLE events (

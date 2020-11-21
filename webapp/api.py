@@ -201,6 +201,30 @@ def get_athletes():
 
 @api.route('olympics/countries')
 def get_country_data():
+    medal_count_by_region = get_medal_counts_by_region()
+    medal_count_by_noc = convert_region_to_noc(medal_count_by_region)
+    games_by_country = get_games_list()
+
+    medal_nocs = set(medal_count_by_noc.keys())
+    games_nocs = set(games_by_country.keys())
+    all_nocs = medal_nocs.union(games_nocs)
+
+    country_info = {}
+    for noc in all_nocs:
+        if noc in medal_count_by_noc:
+            medal_count = medal_count_by_noc[noc]
+        else:
+            medal_count = 0
+
+        country_info[noc] = {'medal_count':medal_count}
+
+        if noc in games_by_country:
+            country_info[noc]['games_list'] = games_by_country[noc]
+
+
+    return json.dumps(country_info)
+
+def get_medal_counts_by_region():
     try:
         query = '''SELECT results.medal_id, countries.id, games.id, countries.region, games.year, games.city, games.season
                     FROM results, countries, games
@@ -221,8 +245,9 @@ def get_country_data():
              medal_count_by_region[region] += 1
          else:
              medal_count_by_region[region] = 1
-   #  medal_count_by_region = sorted(medal_count_by_region.items(), key=lambda item: item[1], reverse=True)
+    return medal_count_by_region
 
+def convert_region_to_noc(medal_count_by_region):
     try:
         query = '''SELECT results.game_id, games.year, countries.id, countries.region, countries.noc
                     FROM results, games, countries
@@ -241,9 +266,29 @@ def get_country_data():
         region, noc = row[3], row[4]
         if not(noc in medal_count_by_noc) and (region in medal_count_by_region):
             medal_count_by_noc[noc] = medal_count_by_region[region]
+    return medal_count_by_noc
 
-    return json.dumps(medal_count_by_noc)
+def get_games_list():
+    try:
+        query = '''SELECT games.year, games.season, games.city, games.country_id, countries.id, countries.noc
+                    FROM games, countries
+                    WHERE games.country_id = countries.id'''
+        cursor = get_psql_cursor()
+        cursor.execute(query)
 
+    except Exception as e:
+        print(e)
+        exit()
+
+    games_by_country = {}
+    for row in cursor:
+        year, season, city, noc = row[0], row[1], row[2], row[5]
+        game_dict = {'year': year, 'season': season, 'city':city}
+        if not(noc in games_by_country):
+            games_by_country[noc] = [game_dict]
+        else:
+            games_by_country[noc].append(game_dict)
+    return games_by_country
 
 
 if __name__ == '__main__':
