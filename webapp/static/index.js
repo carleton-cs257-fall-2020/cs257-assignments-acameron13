@@ -49,12 +49,12 @@ function get_extra_country_info(){
 //     Once you have your list of author dictionaries, use it to build
 //     an HTML table displaying the author names and lifespan.
     .then(function(results) {
-    
+
         // Build the table body.
         for(var country in results){
         	var medal_count = results[country];
         	var fill_color = null;
-        	
+
         	if (medal_count > 0 && medal_count <= 1250){
         		fill_color = range1Fill;
         	} else if (medal_count > 1250 && medal_count <= 2500){
@@ -105,25 +105,16 @@ function onMapDone(dataMap) {
 }
 
 function hoverPopupTemplate(geography, data) {
-    var population = 0;
-    if (data && 'population' in data) {
-        population = data.population;
-    }
-
-    var jeffHasLivedThere = 'Maybe. I dunno.';
-    if (data && 'jeffhasbeenthere' in data) {
-        if (data.jeffhasbeenthere) {
-            jeffHasLivedThere = 'Yes';
-        } else {
-            jeffHasLivedThere = 'No';
-        }
+    var medals;
+    if (data == null) {
+        medals = 0;
+    } else {
+        medals = data.medalCount;
     }
 
     var template = '<div class="hoverpopup"><strong>' + geography.properties.name + '</strong><br>\n'
-                    + '<strong>Population:</strong> ' + population + '<br>\n'
-                    + '<strong>Has Jeff been there?</strong> ' + jeffHasLivedThere + '<br>\n'
+                    + '<strong>Total Medals:</strong> ' + medals + '<br>\n'
                     + '</div>';
-
     return template;
 }
 
