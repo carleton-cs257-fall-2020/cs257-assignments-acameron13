@@ -42,6 +42,10 @@
   padding-top: 20px;
 }
 
+#range_key{
+    padding-left: 20%;
+}
+
 hr.linebreak{
   border: 1px solid #0A0F50;
 }
@@ -157,8 +161,8 @@ hr.linebreak{
      */
     height: 0;
     width: 100%;
-    padding-bottom: 60%;
-
+    padding-bottom: 50%;
+    padding-top: 0px;
     /* My friend Shaun (Carleton CS '02) is even worse than I am at the details of
      * graphic design. So when he wants to make sure the designers don't preserve
      * his color choices, he makes stuff orange to force their hand. I am using
