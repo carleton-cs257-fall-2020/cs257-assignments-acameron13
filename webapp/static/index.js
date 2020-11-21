@@ -55,7 +55,7 @@ function get_extra_country_info(){
         	var medal_count = results[country];
         	var fill_color = null;
         	
-        	if (medal_count <= 1250){
+        	if (medal_count > 0 && medal_count <= 1250){
         		fill_color = range1Fill;
         	} else if (medal_count > 1250 && medal_count <= 2500){
         		fill_color = range2Fill;
