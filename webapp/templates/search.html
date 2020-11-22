@@ -15,12 +15,11 @@
      			<img src="{{ url_for('static', filename='olympic_rings.png') }}" height="75" alt="logo">
     		</div>
     		<div class="topnav">
-      			<a href="index.html">Graphs</a>
+      			<a href="index.html">Map</a>
       			<a class="active" href="search.html">Search</a>
     		</div>
  		</div>
 
-		<!-- <form method="get"> -->
 		<input type="text" list="games_dropdown" placeholder="Games" class="search_dropbtn" id="games_btn"></input>
 		<datalist id="games_dropdown"></datalist>
 
@@ -36,11 +35,8 @@
 		<input type="text" list="athletes_dropdown" placeholder="Athlete" class="search_dropbtn" id="athletes_btn"></input>
 		<datalist id="athletes_dropdown"></datalist>
 
-		<!-- <input type="submit" id="search_submit" onClick="tableOnClicked()"></input> -->
 		<button id="search_submit">Submit</button>
-		<!-- </form> -->
 
-		<!-- <table id="results"></table> -->
 		<table id="results"></table>
 		
 		<div class="pagination">

@@ -10,7 +10,6 @@ from config import user
 from config import password
 from config import database
 
-#app = flask.Flask(__name__)
 api = flask.Blueprint('api', __name__)
 
 def get_psql_cursor():
@@ -288,8 +287,10 @@ def get_games_list():
             games_by_country[noc] = [game_dict]
         else:
             games_by_country[noc].append(game_dict)
+            games_by_country[noc] = sorted(games_by_country[noc], key=lambda x: x['year'], reverse=True)
+    
     return games_by_country
-
+    
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('A sample Flask application/API')

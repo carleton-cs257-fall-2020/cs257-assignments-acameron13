@@ -1,9 +1,5 @@
 // Alison Cameron and Adam Nik
 
-var direction = ''
-var lastEntry = -1;
-var firstEntry = 20;
-var prevFirstEntry = -1;
 var pageNum = 1
 var pageIndeces = {}
 window.onload = initialize;
@@ -15,10 +11,8 @@ function initialize() {
 	propogateDropdown('sports');
 	propogateDropdown('events');
 	propogateDropdown('athletes');
-	console.log(lastEntry)
 	var submit = document.getElementById('search_submit');
 	submit.onclick = newQuery;
-	console.log(lastEntry)
 	var back = document.getElementById('back');
 	var forward = document.getElementById('forward');
 	forward.onclick = go_forward;
@@ -52,35 +46,20 @@ function tableOnClicked(pageNum) {
             url += '&prev_last_entry=' + prev_last;
         }
     }
-    // console.log(direction);
-    console.log(url);
-
-//     Send the request to the Books API /authors/ endpoint
+    
     fetch(url, {method: 'get'})
 
-//     When the results come back, transform them from a JSON string into
-//     a Javascript object (in this case, a list of author dictionaries).
     .then((response) => response.json())
 
-//     Once you have your list of author dictionaries, use it to build
-//     an HTML table displaying the author names and lifespan.
     .then(function(results) {
-        // Build the table body.
-        prevFirstEntry = firstEntry;
-        lastEntry = results[0];
-        firstEntry = results[1];
-        console.log(firstEntry);
-        console.log(lastEntry);
-        console.log(prevFirstEntry);
+        var lastEntry = results[0];
+        var firstEntry = results[1];
         if (!(pageNum in pageIndeces)){
             pageIndeces[pageNum] = [firstEntry, lastEntry];
         }
-        console.log(pageIndeces[pageNum]);
         var tableBody = '<tr><th>Games</th><th>Team</th><th>Sport</th><th>Event</th><th>Medal</th><th>Athlete</th><th>Sex</th><th>Height</th><th>Weight</th><th>Birth Year</th></tr>';
         for (var k = 2; k < results.length; k++) {
-            tableBody += '<tr>';
-
-            tableBody += '<td>' + results[k]['games'] + '</td>'
+            tableBody += '<tr>' + '<td>' + results[k]['games'] + '</td>'
                         + '<td>' + results[k]['team'] + '</td>'
                         + '<td>' + results[k]['sport'] + '</td>'
                         + '<td>' + results[k]['event'] + '</td>'
@@ -93,7 +72,6 @@ function tableOnClicked(pageNum) {
                         + '</tr>';
         }
 
-        // Put the table body we just built inside the table that's already on the page.
 		var resultsTableElement = document.getElementById('results');
 		if (resultsTableElement) {
 			resultsTableElement.innerHTML = tableBody;
@@ -101,8 +79,6 @@ function tableOnClicked(pageNum) {
 
     })
 
-
-    // Log the error if anything went wrong during the fetch.
     .catch(function(error) {
         console.log(error);
     });
@@ -113,12 +89,8 @@ function propogateGamesDropdown(){
     var url = getAPIBaseURL() + '/olympics/dropdowns/games';
     fetch(url, {method: 'get'})
 
-//     When the results come back, transform them from a JSON string into
-//     a Javascript object (in this case, a list of author dictionaries).
     .then((response) => response.json())
 
-//     Once you have your list of author dictionaries, use it to build
-//     an HTML table displaying the author names and lifespan.
     .then(function(results){
         var dropdown_options = '';
         for (var k = 0; k < results.length; k++){
@@ -143,12 +115,8 @@ function propogateDropdown(field){
     var url = getAPIBaseURL() + '/olympics/dropdowns/' + field;
     fetch(url, {method: 'get'})
 
-//     When the results come back, transform them from a JSON string into
-//     a Javascript object (in this case, a list of author dictionaries).
     .then((response) => response.json())
 
-//     Once you have your list of author dictionaries, use it to build
-//     an HTML table displaying the author names and lifespan.
     .then(function(results){
         var dropdown_options = '';
         for (var k = 0; k < results.length; k++){
@@ -192,14 +160,15 @@ function get_dropdown_values(){
 }
 
 function go_forward(){
-	direction = 'forward';
     pageNum ++;
 	tableOnClicked(pageNum);
 }
 
 function go_backward(){
-	direction = 'backward';
     pageNum --;
+    if (pageNum < 1){
+    	pageNum = 1;
+    }
 	tableOnClicked(pageNum);
 }
 

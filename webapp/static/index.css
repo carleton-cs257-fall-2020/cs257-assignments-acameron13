@@ -37,45 +37,11 @@
   background-color: #B9B9B9
 }
 
-.image{
-  padding-left: 20%;
-  padding-top: 20px;
-}
-
 #range_key{
     padding-left: 20%;
 }
 
-hr.linebreak{
-  border: 1px solid #0A0F50;
-}
-
-.graph_dropdowns{
-  margin:auto;
-  width: 45%;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-.graph_dropbtn {
-  background-color: #0A0F50;
-  color: #FFC300;
-  font-size: 24px;
-  border: none;
-  height: 40px;
-  width: 150px;
-  margin: 10px;
-  border-radius: 3px;
-}
-
-#graph_submit{
-  background-color: #0A0F50;
-  color: #FFC300;
-  border: none;
-  border-radius: 3px;
-  height: 25px;
-}
-
+/* 
 .searchnav {
   overflow: hidden;
   background-color: #B9B9B9;
@@ -84,6 +50,7 @@ hr.linebreak{
   padding-top: 10px;
   padding-left: 20%;
 }
+ */
 
 .search_dropbtn {
   background-color: #f1f1f1;
@@ -104,6 +71,7 @@ hr.linebreak{
   border-radius: 3px;
   height: 25px;
 }
+
 
 #results {
   font-family: Arial, Helvetica, sans-serif;
@@ -152,37 +120,31 @@ hr.linebreak{
 #map-container {
     position: relative;
     float: left;
-
-    /* Preserving the container div's aspect ratio (which should be 4:3 for
-     * the Datamap US map) uses this slightly bizarre CSS trick, where you make
-     * sure the height is 0 and the ratio between width and padding-bottom
-     * is your desired aspect ratio. See this pretty good article for details:
-     * https://css-tricks.com/aspect-ratio-boxes/
-     */
     height: 0;
     width: 100%;
     padding-bottom: 50%;
     padding-top: 0px;
-    /* My friend Shaun (Carleton CS '02) is even worse than I am at the details of
-     * graphic design. So when he wants to make sure the designers don't preserve
-     * his color choices, he makes stuff orange to force their hand. I am using
-     * orange here both to remind you to change the color, and to make visible the
-     * size and aspect ratio of the US map object. */
     background: white;
 }
 
+/* 
 #goals {
     float: left;
     width: 40%;
 }
+ */
 
+/* 
 #country-summary {
     float: right;
     width: 40%;
 }
+ */
 
 .hoverpopup {
-    background: #eeeeee;
+    background: #0a0f50;
     border: 1px black solid;
     padding: 3px;
+    font-family: Georgia, serif;
+    color: #e6e7ed;
 }

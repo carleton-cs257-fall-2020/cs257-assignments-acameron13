@@ -1,18 +1,12 @@
 <!-- Alison Cameron and Adam Nik -->
 
-<!-- -interactive map w/ dots
-     -streamlined version of table?
-     -adding options in the dropdowns dynamically
-     -graphs ????? -->
-
 <html>
+
 <head>
   <meta charset="UTF-8">
   <title>Olympics</title>
-  <!-- These are required for the DataMaps library to work -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
-  <!-- You need this one for the world map -->
   <script src="{{ url_for('static', filename='datamaps.world.min.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='index.js') }}" ></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}" type="text/css" />
@@ -25,47 +19,17 @@
       <img src="{{ url_for('static', filename='olympic_rings.png') }}" height="75" alt="logo">
     </div>
     <div class="topnav">
-      <a class="active" href="index.html">Graphs</a>
+      <a class="active" href="index.html">Map</a>
       <a href="search.html">Search</a>
     </div>
   </div>
 
-
-
-    <!-- <img src="{{ url_for('static', filename='map.png') }}" width="75%"> -->
   <div id="country-summary"></div>
   <div id="map-container"></div>
 
   <div id="range_key">
     <img src="{{ url_for('static', filename='range_key.png') }}" width="75%">
   </div>
-
-  <!-- <div>
-      <hr class="linebreak" color=#0A0F50>
-  </div>
-
-  <form method="get" class="graph_dropdowns">
-    <input type="text" list="teams" class="graph_dropbtn" placeholder="Team">
-    <datalist id="teams">
-      <option value="USA">
-      <option value="CAN">
-      <option value="BRA">
-      <option value="UKR">
-    </datalist>
-
-    <input type="text" list="sports" class="graph_dropbtn" placeholder="Sport">
-    <datalist id="sports">
-      <option value="Swimming">
-      <option value="Athletics">
-      <option value="Volleyball">
-    </datalist>
-
-    <input type="submit" value="Submit" id="graph_submit">
-  </form>
-
-  <div class="image">
-    <img src="{{ url_for('static', filename='linegraph.png') }}" width="75%">
-  </div> -->
 
 </body>
 
