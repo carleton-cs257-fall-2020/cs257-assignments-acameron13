@@ -105,7 +105,7 @@ def get_search_results():
         table_data[0] = row[21]
 
     return json.dumps(table_data)
-    
+
 @api.route('olympics/dropdowns')
 def get_fields():
     field = flask.request.args.get('field')
@@ -116,14 +116,14 @@ def get_fields():
             query = '''SELECT countries.noc FROM countries'''
         elif field == 'sports':
         	query = '''SELECT events.sport FROM events'''
-        elif query == 'events':
+        elif field == 'events':
         	query = '''SELECT events.event FROM events'''
         elif field == 'athletes':
         	query = '''SELECT athletes.name FROM athletes'''
-        
+
         cursor = get_psql_cursor()
         cursor.execute(query)
-        
+
     except Exception as e:
         print(e)
         exit()
@@ -137,9 +137,9 @@ def get_fields():
                 dropdown_options.append(row)
         else:
             dropdown_options.append(row)
-      
+
     if field == 'games':
-        dropdown_options = sorted(dropdown_options, key=lambda x: x['year'], reverse=True)  	
+        dropdown_options = sorted(dropdown_options, key=lambda x: x['year'], reverse=True)
     else:
         dropdown_options = sorted(dropdown_options)
     return json.dumps(dropdown_options)
@@ -234,9 +234,9 @@ def get_games_list():
         else:
             games_by_country[noc].append(game_dict)
             games_by_country[noc] = sorted(games_by_country[noc], key=lambda x: x['year'], reverse=True)
-    
+
     return games_by_country
-    
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('A sample Flask application/API')
