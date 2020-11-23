@@ -6,7 +6,7 @@ window.onload = initialize;
 
 function initialize() {
 
-	propogateGamesDropdown();
+	propogateDropdown('games');
 	propogateDropdown('teams');
 	propogateDropdown('sports');
 	propogateDropdown('events');
@@ -85,34 +85,8 @@ function tableOnClicked(pageNum) {
 
 }
 
-function propogateGamesDropdown(){
-    var url = getAPIBaseURL() + '/olympics/dropdowns/games';
-    fetch(url, {method: 'get'})
-
-    .then((response) => response.json())
-
-    .then(function(results){
-        var dropdown_options = '';
-        for (var k = 0; k < results.length; k++){
-                games = results[k]['year'] + ' ' + results[k]['season'];
-                dropdown_options += '<option value="'+games+'">';
-        }
-
-        var gamesDropdownElement = document.getElementById('games_dropdown');
-		if (gamesDropdownElement) {
-			gamesDropdownElement.innerHTML = dropdown_options;
-		}
-
-    })
-
-    .catch(function(error) {
-        console.log(error);
-    });
-
-}
-
 function propogateDropdown(field){
-    var url = getAPIBaseURL() + '/olympics/dropdowns/' + field;
+    var url = getAPIBaseURL() + '/olympics/dropdowns?field=' + field;
     fetch(url, {method: 'get'})
 
     .then((response) => response.json())
@@ -120,7 +94,12 @@ function propogateDropdown(field){
     .then(function(results){
         var dropdown_options = '';
         for (var k = 0; k < results.length; k++){
+        	if (field == 'games'){
+        		games = results[k]['year'] + ' ' + results[k]['season'];
+                dropdown_options += '<option value="'+games+'">';
+            } else{
                 dropdown_options += '<option value="'+results[k]+'">';
+            }
         }
 
         var dropdownElement = document.getElementById(field+'_dropdown');

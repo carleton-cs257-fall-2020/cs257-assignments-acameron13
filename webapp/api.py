@@ -105,97 +105,48 @@ def get_search_results():
         table_data[0] = row[21]
 
     return json.dumps(table_data)
-
-@api.route('olympics/dropdowns/games')
-def get_games():
+    
+@api.route('olympics/dropdowns')
+def get_fields():
+    field = flask.request.args.get('field')
     try:
-        query = '''SELECT games.year, games.season
-                    FROM games'''
-
+        if field == 'games':
+            query = '''SELECT games.year, games.season FROM games'''
+            print('games')
+        elif field == 'teams':
+            query = '''SELECT countries.noc FROM countries'''
+            print('teams')
+        elif field == 'sports':
+            query = '''SELECT events.sport FROM events'''
+            print('sports')
+        elif field == 'events':
+            query = '''SELECT events.event FROM events'''
+            print('events')
+        elif field == 'athletes':
+            query = '''SELECT athletes.name FROM athletes'''
+            print('ATH')
+        
         cursor = get_psql_cursor()
         cursor.execute(query)
-
+        
     except Exception as e:
         print(e)
         exit()
 
     all_data = []
     for row in cursor:
-        all_data.append({'year': row[0], 'season': row[1]})
-    sorted_all_data = sorted(all_data, key=lambda x: x['year'], reverse=True)
-    return json.dumps(sorted_all_data)
-
-@api.route('olympics/dropdowns/teams')
-def get_teams():
-    try:
-        query = '''SELECT countries.noc FROM countries'''
-
-        cursor = get_psql_cursor()
-        cursor.execute(query)
-
-    except Exception as e:
-        print(e)
-        exit()
-
-    all_data = []
-    for row in cursor:
-        all_data.append(row)
-    sorted_all_data = sorted(all_data)
-    return json.dumps(sorted_all_data)
-
-@api.route('olympics/dropdowns/sports')
-def get_sports():
-    try:
-        query = '''SELECT events.sport FROM events'''
-
-        cursor = get_psql_cursor()
-        cursor.execute(query)
-
-    except Exception as e:
-        print(e)
-        exit()
-
-    all_data = []
-    for row in cursor:
-    	if row not in all_data:
-        	all_data.append(row)
-    sorted_all_data = sorted(all_data)
-    return json.dumps(sorted_all_data)
-
-@api.route('olympics/dropdowns/events')
-def get_events():
-    try:
-        query = '''SELECT events.event FROM events'''
-
-        cursor = get_psql_cursor()
-        cursor.execute(query)
-
-    except Exception as e:
-        print(e)
-        exit()
-
-    all_data = []
-    for row in cursor:
-        all_data.append(row)
-    sorted_all_data = sorted(all_data)
-    return json.dumps(sorted_all_data)
-
-@api.route('olympics/dropdowns/athletes')
-def get_athletes():
-    try:
-        query = '''SELECT athletes.name FROM athletes'''
-
-        cursor = get_psql_cursor()
-        cursor.execute(query)
-
-    except Exception as e:
-        print(e)
-        exit()
-
-    all_data = []
-    for row in cursor:
-        all_data.append(row)
-    sorted_all_data = sorted(all_data)
+        if field == 'games':
+            all_data.append({'year': row[0], 'season': row[1]})
+        elif field == 'sports':
+            if row not in all_data:
+                all_data.append(row)
+        elif field == 'teams' or field == 'events' or field == 'athletes':
+            all_data.append(row)
+      
+    if field == 'games':
+        sorted_all_data = sorted(all_data, key=lambda x: x['year'], reverse=True)  	
+    else:
+        sorted_all_data = sorted(all_data)
     return json.dumps(sorted_all_data)
 
 @api.route('olympics/countries')
