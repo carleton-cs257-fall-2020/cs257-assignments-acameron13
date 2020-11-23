@@ -41,7 +41,7 @@
     padding-left: 20%;
 }
 
-/* 
+/*
 .searchnav {
   overflow: hidden;
   background-color: #B9B9B9;
@@ -98,6 +98,10 @@
 
 .pagination {
   display: inline-block;
+  float: right;
+  padding-right: 5%;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .pagination button {
@@ -127,14 +131,14 @@
     background: white;
 }
 
-/* 
+/*
 #goals {
     float: left;
     width: 40%;
 }
  */
 
-/* 
+/*
 #country-summary {
     float: right;
     width: 40%;

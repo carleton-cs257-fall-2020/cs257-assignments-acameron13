@@ -26,7 +26,7 @@ function get_extra_country_info(){
     .then((response) => response.json())
 
     .then(function(results) {
-    
+
         for(var country in results){
         	var medal_count = results[country].medal_count;
         	var fill_color = '#e6e7ed';
@@ -74,7 +74,7 @@ function initializeMap() {
 }
 
 function onMapDone(dataMap) {
-    dataMap.svg.selectAll('.datamaps-subunit');
+    dataMap.svg.selectAll('.datamaps-subunit').on('click', onCountryClick);
 }
 
 function hoverPopupTemplate(geography, data) {
@@ -104,15 +104,20 @@ function hoverPopupTemplate(geography, data) {
 function onCountryClick(geography) {
     // geography.properties.name will be the state/country name (e.g. 'Minnesota')
     // geography.id will be the state/country name (e.g. 'MN')
-    var countrySummaryElement = document.getElementById('country-summary');
-    if (countrySummaryElement) {
-        var summary = '<p><strong>Country:</strong> ' + geography.properties.name + '</p>\n'
-                    + '<p><strong>Abbreviation:</strong> ' + geography.id + '</p>\n';
-        if (geography.id in extraCountryInfo) {
-            var info = extraCountryInfo[geography.id];
-            summary += '<p><strong>Population:</strong> ' + info.population + '</p>\n';
-        }
-
-        countrySummaryElement.innerHTML = summary;
-    }
+    // var countrySummaryElement = document.getElementById('country-summary');
+    // if (countrySummaryElement) {
+    //     var summary = '<p><strong>Country:</strong> ' + geography.properties.name + '</p>\n'
+    //                 + '<p><strong>Abbreviation:</strong> ' + geography.id + '</p>\n';
+    //     if (geography.id in extraCountryInfo) {
+    //         var info = extraCountryInfo[geography.id];
+    //         summary += '<p><strong>Population:</strong> ' + info.population + '</p>\n';
+    //     }
+    //
+    //     countrySummaryElement.innerHTML = summary;
+    // }
+    noc = geography.id;
+    // searchTeam(noc);
+    // console.log(noc);
+    // window.location.href = 'search.html/?team=' + noc;
+    navigateAndSearch(noc);
 }
