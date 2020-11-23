@@ -11,14 +11,14 @@ function initialize() {
 	propogateDropdown('sports');
 	propogateDropdown('events');
 	propogateDropdown('athletes');
-    // var searchByNoc = getSearchByNoc();
-    // console.log(searchByNoc);
-    // if (searchByNoc){
-    //     fillInSearchTable(searchByNoc);
-    // } else {
-    //     newQuery();
-    // }
-    newQuery();
+    var fullLocationURL = window.location.href;
+    var URLparts = fullLocationURL.split('=');
+    if (URLparts.length == 1){
+    	newQuery();
+    } else if (URLparts.length == 2){
+    	document.getElementById('teams_btn').value = URLparts[1];
+    	newQuery();
+    }
 	var submit = document.getElementById('search_submit');
 	submit.onclick = newQuery;
 	var back = document.getElementById('back');
@@ -165,10 +165,4 @@ function newQuery(){
     pageIndeces = {};
     console.log("newQuery");
     tableOnClicked(pageNum);
-}
-
-function fillInSearchTable(noc){
-    console.log("in search");
-    document.getElementById('teams_btn').value = noc;
-    newQuery();
 }
