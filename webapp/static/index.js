@@ -1,6 +1,7 @@
 // Alison Cameron and Adam Nik
 
 var extraCountryInfo = {};
+var searchByNoc;
 window.onload = initialize;
 
 function initialize() {
@@ -117,7 +118,7 @@ function onCountryClick(geography) {
     // }
     noc = geography.id;
     // searchTeam(noc);
-    // console.log(noc);
-    // window.location.href = 'search.html/?team=' + noc;
+    console.log(noc);
+    console.log(searchByNoc);
     navigateAndSearch(noc);
 }

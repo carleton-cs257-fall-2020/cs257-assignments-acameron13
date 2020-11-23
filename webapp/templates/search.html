@@ -6,6 +6,7 @@
 	  <title>Olympics</title>
 	  <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}" type="text/css" />
 	  <script type="text/javascript" src="{{ url_for('static', filename='search.js') }}" ></script>
+      <script type="text/javascript" src="{{ url_for('static', filename='connection.js') }}" ></script>
 	  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
 	</head>
 
@@ -38,7 +39,7 @@
 		<button id="search_submit">Submit</button>
 
 		<table id="results"></table>
-		
+
 		<div class="pagination">
   			<button id="back">❮</button>
   			<button id="forward">❯</button>

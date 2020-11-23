@@ -105,30 +105,25 @@ def get_search_results():
         table_data[0] = row[21]
 
     return json.dumps(table_data)
-    
+
 @api.route('olympics/dropdowns')
 def get_fields():
     field = flask.request.args.get('field')
     try:
         if field == 'games':
             query = '''SELECT games.year, games.season FROM games'''
-            print('games')
         elif field == 'teams':
             query = '''SELECT countries.noc FROM countries'''
-            print('teams')
         elif field == 'sports':
             query = '''SELECT events.sport FROM events'''
-            print('sports')
         elif field == 'events':
             query = '''SELECT events.event FROM events'''
-            print('events')
         elif field == 'athletes':
             query = '''SELECT athletes.name FROM athletes'''
-            print('ATH')
-        
+
         cursor = get_psql_cursor()
         cursor.execute(query)
-        
+
     except Exception as e:
         print(e)
         exit()
@@ -142,9 +137,9 @@ def get_fields():
                 all_data.append(row)
         elif field == 'teams' or field == 'events' or field == 'athletes':
             all_data.append(row)
-      
+
     if field == 'games':
-        sorted_all_data = sorted(all_data, key=lambda x: x['year'], reverse=True)  	
+        sorted_all_data = sorted(all_data, key=lambda x: x['year'], reverse=True)
     else:
         sorted_all_data = sorted(all_data)
     return json.dumps(sorted_all_data)
@@ -239,9 +234,9 @@ def get_games_list():
         else:
             games_by_country[noc].append(game_dict)
             games_by_country[noc] = sorted(games_by_country[noc], key=lambda x: x['year'], reverse=True)
-    
+
     return games_by_country
-    
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('A sample Flask application/API')

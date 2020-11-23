@@ -1,7 +1,7 @@
 // Alison Cameron and Adam Nik
 
-var pageNum = 1
-var pageIndeces = {}
+var pageNum = 1;
+var pageIndeces = {};
 window.onload = initialize;
 
 function initialize() {
@@ -11,6 +11,14 @@ function initialize() {
 	propogateDropdown('sports');
 	propogateDropdown('events');
 	propogateDropdown('athletes');
+    // var searchByNoc = getSearchByNoc();
+    // console.log(searchByNoc);
+    // if (searchByNoc){
+    //     fillInSearchTable(searchByNoc);
+    // } else {
+    //     newQuery();
+    // }
+    newQuery();
 	var submit = document.getElementById('search_submit');
 	submit.onclick = newQuery;
 	var back = document.getElementById('back');
@@ -27,6 +35,7 @@ function getAPIBaseURL() {
 }
 
 function tableOnClicked(pageNum) {
+    console.log(pageNum);
 	var url = getAPIBaseURL() + '/olympics/search';
     var addition = get_dropdown_values();
     url += addition;
@@ -46,7 +55,7 @@ function tableOnClicked(pageNum) {
             url += '&prev_last_entry=' + prev_last;
         }
     }
-    
+
     fetch(url, {method: 'get'})
 
     .then((response) => response.json())
@@ -152,7 +161,14 @@ function go_backward(){
 }
 
 function newQuery(){
-    pageNum = 1
-    pageIndeces = {}
+    pageNum = 1;
+    pageIndeces = {};
+    console.log("newQuery");
     tableOnClicked(pageNum);
+}
+
+function fillInSearchTable(noc){
+    console.log("in search");
+    document.getElementById('teams_btn').value = noc;
+    newQuery();
 }
