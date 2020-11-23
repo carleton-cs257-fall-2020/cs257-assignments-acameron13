@@ -25,6 +25,7 @@ def home():
 # without requiring you to have specific routes for each page.
 @app.route('/<path:path>')
 def shared_header_catchall(path):
+    team = flask.request.args.get('team')
     return flask.render_template(path)
 
 if __name__ == '__main__':

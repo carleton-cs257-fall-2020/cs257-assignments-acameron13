@@ -120,5 +120,6 @@ function onCountryClick(geography) {
     // searchTeam(noc);
     console.log(noc);
     console.log(searchByNoc);
-    navigateAndSearch(noc);
+    //navigateAndSearch(noc);
+    window.location.href = 'search.html?team=' + noc;
 }
