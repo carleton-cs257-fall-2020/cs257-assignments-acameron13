@@ -105,7 +105,7 @@ def get_search_results():
         table_data[0] = row[21]
 
     return json.dumps(table_data)
-
+    
 @api.route('olympics/dropdowns')
 def get_fields():
     field = flask.request.args.get('field')
@@ -115,34 +115,34 @@ def get_fields():
         elif field == 'teams':
             query = '''SELECT countries.noc FROM countries'''
         elif field == 'sports':
-            query = '''SELECT events.sport FROM events'''
-        elif field == 'events':
-            query = '''SELECT events.event FROM events'''
+        	query = '''SELECT events.sport FROM events'''
+        elif query == 'events':
+        	query = '''SELECT events.event FROM events'''
         elif field == 'athletes':
-            query = '''SELECT athletes.name FROM athletes'''
-
+        	query = '''SELECT athletes.name FROM athletes'''
+        
         cursor = get_psql_cursor()
         cursor.execute(query)
-
+        
     except Exception as e:
         print(e)
         exit()
 
-    all_data = []
+    dropdown_options = []
     for row in cursor:
         if field == 'games':
-            all_data.append({'year': row[0], 'season': row[1]})
+            dropdown_options.append({'year': row[0], 'season': row[1]})
         elif field == 'sports':
-            if row not in all_data:
-                all_data.append(row)
-        elif field == 'teams' or field == 'events' or field == 'athletes':
-            all_data.append(row)
-
+            if row not in dropdown_options:
+                dropdown_options.append(row)
+        else:
+            dropdown_options.append(row)
+      
     if field == 'games':
-        sorted_all_data = sorted(all_data, key=lambda x: x['year'], reverse=True)
+        dropdown_options = sorted(dropdown_options, key=lambda x: x['year'], reverse=True)  	
     else:
-        sorted_all_data = sorted(all_data)
-    return json.dumps(sorted_all_data)
+        dropdown_options = sorted(dropdown_options)
+    return json.dumps(dropdown_options)
 
 @api.route('olympics/countries')
 def get_country_data():
@@ -234,9 +234,9 @@ def get_games_list():
         else:
             games_by_country[noc].append(game_dict)
             games_by_country[noc] = sorted(games_by_country[noc], key=lambda x: x['year'], reverse=True)
-
+    
     return games_by_country
-
+    
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('A sample Flask application/API')

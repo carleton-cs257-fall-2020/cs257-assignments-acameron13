@@ -23,8 +23,8 @@ function initialize() {
 	submit.onclick = newQuery;
 	var back = document.getElementById('back');
 	var forward = document.getElementById('forward');
-	forward.onclick = go_forward;
-	back.onclick = go_backward;
+	forward.onclick = goForward;
+	back.onclick = goBackward;
 
 }
 
@@ -35,9 +35,8 @@ function getAPIBaseURL() {
 }
 
 function tableOnClicked(pageNum) {
-    console.log(pageNum);
 	var url = getAPIBaseURL() + '/olympics/search';
-    var addition = get_dropdown_values();
+    var addition = getDropdownValues();
     url += addition;
 
     if (pageNum in pageIndeces){
@@ -50,9 +49,9 @@ function tableOnClicked(pageNum) {
         }
     } else {
         if (pageNum != 1){
-            prev_indeces = pageIndeces[pageNum - 1];
-            prev_last = prev_indeces[1];
-            url += '&prev_last_entry=' + prev_last;
+            prevIndeces = pageIndeces[pageNum - 1];
+            prevLast = prevIndeces[1];
+            url += '&prev_last_entry=' + prevLast;
         }
     }
 
@@ -101,19 +100,19 @@ function propogateDropdown(field){
     .then((response) => response.json())
 
     .then(function(results){
-        var dropdown_options = '';
+        var dropdownOptions = '';
         for (var k = 0; k < results.length; k++){
         	if (field == 'games'){
         		games = results[k]['year'] + ' ' + results[k]['season'];
-                dropdown_options += '<option value="'+games+'">';
+                dropdownOptions += '<option value="'+games+'">';
             } else{
-                dropdown_options += '<option value="'+results[k]+'">';
+                dropdownOptions += '<option value="'+results[k]+'">';
             }
         }
 
         var dropdownElement = document.getElementById(field+'_dropdown');
 		if (dropdownElement) {
-			dropdownElement.innerHTML = dropdown_options;
+			dropdownElement.innerHTML = dropdownOptions;
 		}
 
     })
@@ -124,35 +123,35 @@ function propogateDropdown(field){
 
 }
 
-function get_dropdown_values(){
-	var games_value = document.getElementById('games_btn').value;
-	var teams_value = document.getElementById('teams_btn').value;
-	var sports_value = document.getElementById('sports_btn').value;
-	var events_value = document.getElementById('events_btn').value;
-	var athletes_value = document.getElementById('athletes_btn').value;
+function getDropdownValues(){
+	var gamesValue = document.getElementById('games_btn').value;
+	var teamsValue = document.getElementById('teams_btn').value;
+	var sportsValue = document.getElementById('sports_btn').value;
+	var eventsValue = document.getElementById('events_btn').value;
+	var athletesValue = document.getElementById('athletes_btn').value;
 
-	var search_params = {'games': games_value, 'team': teams_value,
-                    'sport': sports_value, 'event': events_value,
-                    'athlete': athletes_value};
+	var searchParams = {'games': gamesValue, 'team': teamsValue,
+                    'sport': sportsValue, 'event': eventsValue,
+                    'athlete': athletesValue};
 
-    var api_addition = '?';
-    for (var param in search_params){
-        if(param == 'games' && search_params[param]){
-            api_addition += param + '=' + search_params[param].slice(0,4) + '&';
+    var apiAddition = '?';
+    for (var param in searchParams){
+        if(param == 'games' && searchParams[param]){
+            apiAddition += param + '=' + searchParams[param].slice(0,4) + '&';
         }
-        else if (param != 'games' && search_params[param]){
-            api_addition += param + '=' + search_params[param] + '&';
+        else if (param != 'games' && searchParams[param]){
+            apiAddition += param + '=' + searchParams[param] + '&';
         }
     }
-    return api_addition;
+    return apiAddition;
 }
 
-function go_forward(){
+function goForward(){
     pageNum ++;
 	tableOnClicked(pageNum);
 }
 
-function go_backward(){
+function goBackward(){
     pageNum --;
     if (pageNum < 1){
     	pageNum = 1;
@@ -163,6 +162,5 @@ function go_backward(){
 function newQuery(){
     pageNum = 1;
     pageIndeces = {};
-    console.log("newQuery");
     tableOnClicked(pageNum);
 }

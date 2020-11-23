@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 '''
     webapp.py
     Jeff Ondich
@@ -15,17 +14,12 @@ import api
 app = flask.Flask(__name__, static_folder='static', template_folder='templates')
 app.register_blueprint(api.api, url_prefix='/api')
 
-# This route delivers the user your site's home page.
 @app.route('/')
 def home():
     return flask.render_template('index.html')
 
-# This route supports relative links among your web pages, assuming those pages
-# are stored in the templates/ directory or one of its descendant directories,
-# without requiring you to have specific routes for each page.
 @app.route('/<path:path>')
 def shared_header_catchall(path):
-    team = flask.request.args.get('team')
     return flask.render_template(path)
 
 if __name__ == '__main__':

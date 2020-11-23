@@ -5,7 +5,7 @@ var searchByNoc;
 window.onload = initialize;
 
 function initialize() {
-	get_extra_country_info();
+	getExtraCountryInfo();
 }
 
 function getAPIBaseURL() {
@@ -13,7 +13,7 @@ function getAPIBaseURL() {
     return baseURL;
 }
 
-function get_extra_country_info(){
+function getExtraCountryInfo(){
 
 	var range1Fill = '#b5b7ca';
 	var range2Fill = '#8487a7';
@@ -29,25 +29,24 @@ function get_extra_country_info(){
     .then(function(results) {
 
         for(var country in results){
-        	var medal_count = results[country].medal_count;
-        	var fill_color = '#e6e7ed';
+        	var countryMedalCount = results[country].medal_count;
+        	var countryFillColor = '#e6e7ed';
 
-        	if (medal_count > 0 && medal_count <= 1250){
-        		fill_color = range1Fill;
-        	} else if (medal_count > 1250 && medal_count <= 2500){
-        		fill_color = range2Fill;
-        	} else if (medal_count > 2500 && medal_count <= 3750){
-        		fill_color = range3Fill;
-        	} else if (medal_count > 3750 && medal_count <= 5000){
-        		fill_color = range4Fill;
-        	} else if (medal_count > 5000){
-        		fill_color = range5Fill;
+        	if (countryMedalCount > 0 && countryMedalCount <= 1250){
+        		countryFillColor = range1Fill;
+        	} else if (countryMedalCount > 1250 && countryMedalCount <= 2500){
+        		countryFillColor = range2Fill;
+        	} else if (countryMedalCount > 2500 && countryMedalCount <= 3750){
+        		countryFillColor = range3Fill;
+        	} else if (countryMedalCount > 3750 && countryMedalCount <= 5000){
+        		countryFillColor = range4Fill;
+        	} else if (countryMedalCount > 5000){
+        		countryFillColor = range5Fill;
         	}
 
-            extraCountryInfo[country] = {medalCount: medal_count, fillColor: fill_color};
-
+            extraCountryInfo[country] = {medalCount: countryMedalCount, fillColor: countryFillColor};
             if (results[country].games_list){
-                extraCountryInfo[country].games_list = results[country].games_list;
+                extraCountryInfo[country].gamesList = results[country].games_list;
             }
         }
     	initializeMap();
@@ -89,11 +88,11 @@ function hoverPopupTemplate(geography, data) {
     var template = '<div class="hoverpopup"><strong>' + geography.properties.name + '</strong><br>\n'
                     + '<strong>Total Medals:</strong> ' + medals + '<br>\n';
 
-    if(data && extraCountryInfo[geography.id].games_list){
+    if(data && extraCountryInfo[geography.id].gamesList){
     	template += '<br>\n<strong>Hosted Games in:</strong><br>\n';
-        games_list = extraCountryInfo[geography.id].games_list;
-        for (i in games_list){
-            games = games_list[i];
+        countryGamesList = extraCountryInfo[geography.id].gamesList;
+        for (i in countryGamesList){
+            games = countryGamesList[i];
             template += games.year + ' ' + games.season + ', ' + games.city + '<br>\n';
         }
     }
@@ -103,23 +102,6 @@ function hoverPopupTemplate(geography, data) {
 }
 
 function onCountryClick(geography) {
-    // geography.properties.name will be the state/country name (e.g. 'Minnesota')
-    // geography.id will be the state/country name (e.g. 'MN')
-    // var countrySummaryElement = document.getElementById('country-summary');
-    // if (countrySummaryElement) {
-    //     var summary = '<p><strong>Country:</strong> ' + geography.properties.name + '</p>\n'
-    //                 + '<p><strong>Abbreviation:</strong> ' + geography.id + '</p>\n';
-    //     if (geography.id in extraCountryInfo) {
-    //         var info = extraCountryInfo[geography.id];
-    //         summary += '<p><strong>Population:</strong> ' + info.population + '</p>\n';
-    //     }
-    //
-    //     countrySummaryElement.innerHTML = summary;
-    // }
     noc = geography.id;
-    // searchTeam(noc);
-    console.log(noc);
-    console.log(searchByNoc);
-    //navigateAndSearch(noc);
     window.location.href = 'search.html?team=' + noc;
 }
