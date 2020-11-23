@@ -1,4 +1,8 @@
-#Alison Cameron and Adam Nik
+'''
+Alison Cameron and Adam Nik
+CS257 Software Design
+Carleton College
+'''
 
 import sys
 import argparse
@@ -13,9 +17,6 @@ from config import database
 api = flask.Blueprint('api', __name__)
 
 def get_psql_cursor():
-	'''
-	Returns cursor to psql database connection
-	'''
 	try:
 		connection = psycopg2.connect(database=database, user=user, password=password)
 		cursor = connection.cursor()
@@ -27,6 +28,9 @@ def get_psql_cursor():
 
 @api.route('/olympics/search')
 def get_search_results():
+    '''
+    Retrieves the data needed to fill in the table on search.html
+    '''
     athlete = flask.request.args.get('athlete')
     team = flask.request.args.get('team')
     games = flask.request.args.get('games')
@@ -71,8 +75,6 @@ def get_search_results():
 
         query += ' LIMIT 20'
 
-
-
         cursor = get_psql_cursor()
         cursor.execute(query, tuple(param_names))
 
@@ -98,6 +100,8 @@ def get_search_results():
                         'birth year': birth_year}
 
         table_data.append(table_entry)
+
+        #Retrieve the id of the first and last entry for this page of data
         if first:
             table_data[1] = row[21]
             first = False
@@ -108,6 +112,9 @@ def get_search_results():
 
 @api.route('olympics/dropdowns')
 def get_fields():
+    '''
+    Retrieves data to fill in the options for each dropdown menu on search.html
+    '''
     field = flask.request.args.get('field')
     try:
         if field == 'games':
@@ -146,6 +153,11 @@ def get_fields():
 
 @api.route('olympics/countries')
 def get_country_data():
+    '''
+    Retrieves data to be used for the map in index.html. The data for each
+    country includes the total number of medals they have won, as well as if
+    they have hosted Olympic games and where.
+    '''
     medal_count_by_region = get_medal_counts_by_region()
     medal_count_by_noc = convert_region_to_noc(medal_count_by_region)
     games_by_country = get_games_list()

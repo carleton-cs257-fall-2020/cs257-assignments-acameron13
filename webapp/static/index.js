@@ -1,7 +1,15 @@
-// Alison Cameron and Adam Nik
+/* Alison Cameron and Adam Nik
+   CS257 Software Design
+   Carleton College
+
+   Datamaps is Copyright (c) 2012 Mark DiMarco
+   https://github.com/markmarkoh/datamaps
+
+   Datamaps is edited in this repository so that the country id's
+   match the ids in our dataset.
+*/
 
 var extraCountryInfo = {};
-var searchByNoc;
 window.onload = initialize;
 
 function initialize() {
@@ -14,7 +22,6 @@ function getAPIBaseURL() {
 }
 
 function getExtraCountryInfo(){
-
 	var range1Fill = '#b5b7ca';
 	var range2Fill = '#8487a7';
 	var range3Fill = '#535784';
@@ -27,7 +34,6 @@ function getExtraCountryInfo(){
     .then((response) => response.json())
 
     .then(function(results) {
-
         for(var country in results){
         	var countryMedalCount = results[country].medal_count;
         	var countryFillColor = '#e6e7ed';
@@ -102,6 +108,8 @@ function hoverPopupTemplate(geography, data) {
 }
 
 function onCountryClick(geography) {
+    /*When a country in the map is clicked, onCountryClick will navigate to
+    search.html and automatically filter by said country.*/
     noc = geography.id;
     window.location.href = 'search.html?team=' + noc;
 }

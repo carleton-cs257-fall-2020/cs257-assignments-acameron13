@@ -1,10 +1,9 @@
 '''
-    webapp.py
-    Jeff Ondich
-    6 November 2020
+Alison Cameron and Adam Nik
+CS257 Software Design
+Carleton College
 
-    A tiny Flask web application, including API, to be used
-    as a template for setting up your web app assignment.
+Template provided by Jeff Ondich
 '''
 import sys
 import argparse

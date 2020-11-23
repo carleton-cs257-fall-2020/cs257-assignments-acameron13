@@ -1,11 +1,17 @@
-// Alison Cameron and Adam Nik
+/* Alison Cameron and Adam Nik
+   CS257 Software Design
+   Carleton College
+*/
 
 var pageNum = 1;
 var pageIndeces = {};
 window.onload = initialize;
 
 function initialize() {
+    /*Auto-loads a table with no filters.
 
+    If this page is loaded from clicking on a country from the map in index.html,
+    the table is automatically filtered by that country.*/
 	propogateDropdown('games');
 	propogateDropdown('teams');
 	propogateDropdown('sports');
@@ -13,19 +19,23 @@ function initialize() {
 	propogateDropdown('athletes');
     var fullLocationURL = window.location.href;
     var URLparts = fullLocationURL.split('=');
+
+    //Check for navigation from index.html
     if (URLparts.length == 1){
+        //Default load
     	newQuery();
     } else if (URLparts.length == 2){
+        //Filter by country
     	document.getElementById('teams_btn').value = URLparts[1];
     	newQuery();
     }
+
 	var submit = document.getElementById('search_submit');
 	submit.onclick = newQuery;
 	var back = document.getElementById('back');
 	var forward = document.getElementById('forward');
 	forward.onclick = goForward;
 	back.onclick = goBackward;
-
 }
 
 
@@ -35,10 +45,12 @@ function getAPIBaseURL() {
 }
 
 function tableOnClicked(pageNum) {
+    /*Gets table data from API and constructs HTML element*/
 	var url = getAPIBaseURL() + '/olympics/search';
     var addition = getDropdownValues();
     url += addition;
 
+    //Pagination
     if (pageNum in pageIndeces){
         var indeces = pageIndeces[pageNum];
         if (indeces[0] != null){
@@ -62,9 +74,12 @@ function tableOnClicked(pageNum) {
     .then(function(results) {
         var lastEntry = results[0];
         var firstEntry = results[1];
+
+        //Store indeces of table page for future use
         if (!(pageNum in pageIndeces)){
             pageIndeces[pageNum] = [firstEntry, lastEntry];
         }
+
         var tableBody = '<tr><th>Games</th><th>Team</th><th>Sport</th><th>Event</th><th>Medal</th><th>Athlete</th><th>Sex</th><th>Height</th><th>Weight</th><th>Birth Year</th></tr>';
         for (var k = 2; k < results.length; k++) {
             tableBody += '<tr>' + '<td>' + results[k]['games'] + '</td>'
